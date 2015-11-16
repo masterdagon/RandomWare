@@ -23,10 +23,10 @@ public class ListNotes {
         return notes;
     }
 
-    public ArrayList<String> getTitles(){
-        ArrayList<String> astr = new ArrayList();
+    public String[] getTitles(){
+        String[] astr = new String[notes.size()];
         for(int i = 0; i<notes.size();i++){
-            astr.add(notes.get(i)[1]);
+            astr[i]=(notes.get(i)[1]);
         }
         return astr;
     }

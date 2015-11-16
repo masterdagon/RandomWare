@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         });
         inputText = (EditText)findViewById(R.id.noteInmput);
         showText = (TextView)findViewById(R.id.responseText);
-        setContentView( R.layout.activity_main);
+
         notelist = (ListView)findViewById(R.id.list);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listNotes.getTitles());
         notelist.setAdapter(adapter);
