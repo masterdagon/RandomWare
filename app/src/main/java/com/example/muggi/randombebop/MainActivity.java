@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     public EditText inputText;
     public TextView showText;
-    public ListNotes listNotes;
+    public ListNotes listNotes = new ListNotes();
     public ListView notelist;
 
     @Override

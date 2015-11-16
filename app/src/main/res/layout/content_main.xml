@@ -33,6 +33,7 @@
         android:text="@string/response"/>
     <ListView
         android:id="@+id/list"
+        android:layout_below="@id/responseText"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:background="#400000FF"
