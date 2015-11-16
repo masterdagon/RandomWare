@@ -10,35 +10,44 @@
     tools:showIn="@layout/activity_main" tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/noteInmput"
+        android:id="@+id/noteTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Title"
+        android:padding='12dip'
+        android:layout_alignParentTop="true"/>
+    <EditText
+        android:id="@+id/noteInput"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="Type in your note"
         android:padding='12dip'
-        android:layout_alignParentTop="true"/>
+        android:layout_below="@id/noteTitle"/>
 
     <Button
         android:id="@+id/buttonSave"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/noteInmput"
+        android:layout_below="@id/noteInput"
         android:text="Save"
         android:onClick="saveNote"/>
-    <TextView
-        android:id="@+id/responseText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/buttonSave"
-        android:text="@string/response"/>
+
     <ListView
         android:id="@+id/list"
-        android:layout_below="@id/responseText"
+        android:layout_below="@id/buttonSave"
         android:layout_width="fill_parent"
         android:layout_height="200dp"
         android:background="#400000FF"
 
         />
+    <TextView
+        android:id="@+id/responseText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list"
+        android:text="@string/response"/>
 
 
 

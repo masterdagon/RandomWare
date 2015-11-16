@@ -23,12 +23,17 @@ public class ListNotes {
         return notes;
     }
 
+    public int getSize(){
+        return notes.size();
+    }
+
     public String[] getTitles(){
         String[] astr = new String[notes.size()];
         for(int i = 0; i<notes.size();i++){
-            astr[i]=(notes.get(i)[1]);
+            astr[i]=(notes.get(i)[0]);
         }
         return astr;
     }
+
 
 }

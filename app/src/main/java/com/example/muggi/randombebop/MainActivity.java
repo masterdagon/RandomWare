@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    public EditText inputTitle;
     public EditText inputText;
     public TextView showText;
     public ListNotes listNotes = new ListNotes();
@@ -35,12 +37,19 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-        inputText = (EditText)findViewById(R.id.noteInmput);
+        inputTitle = (EditText)findViewById(R.id.noteTitle);
+        inputText = (EditText)findViewById(R.id.noteInput);
         showText = (TextView)findViewById(R.id.responseText);
 
         notelist = (ListView)findViewById(R.id.list);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listNotes.getTitles());
-        notelist.setAdapter(adapter);
+        notelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                String str = listNotes.getNotes().get(position)[1];
+                showText.setText(str);
+            }
+        });
+
     }
 
     @Override
@@ -67,8 +76,18 @@ public class MainActivity extends AppCompatActivity {
 
     public void saveNote(View view){
         String str = inputText.getText().toString();
-        listNotes.createListItem("test",str);
-        showText.setText(str);
+        String title = inputTitle.getText().toString();
+        listNotes.createListItem(title, str);
+
+        if(listNotes.getSize()>0){
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listNotes.getTitles());
+            notelist.setAdapter(adapter);
+
+        }
 
     }
+
+
+
+
 }
