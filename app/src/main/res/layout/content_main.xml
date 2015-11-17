@@ -42,11 +42,20 @@
         android:background="#400000FF"
 
         />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list"
+        android:text="Delete"
+        android:onClick="DeleteNote"/>
+
     <TextView
         android:id="@+id/responseText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/list"
+        android:layout_below="@id/buttonDelete"
         android:text="@string/response"/>
 
 

@@ -1,5 +1,6 @@
 package com.example.muggi.randombebop;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,18 +14,26 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     public EditText inputTitle;
     public EditText inputText;
     public TextView showText;
-    public ListNotes listNotes = new ListNotes();
+    public ListNotes listNotes;
     public ListView notelist;
+    public int lastListItemSelected = -1;
+private static Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MainActivity.context = getApplicationContext();
+        listNotes = new ListNotes(context);
+        listNotes.loadfile();
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,11 +54,22 @@ public class MainActivity extends AppCompatActivity {
         notelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
+                lastListItemSelected = position;
                 String str = listNotes.getNotes().get(position)[1];
                 showText.setText(str);
             }
         });
+        if (listNotes.getSize() > 0) {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listNotes.getTitles());
+            notelist.setAdapter(adapter);
 
+        }
+
+
+    }
+
+    public static Context getAppContext(){
+        return MainActivity.context;
     }
 
     @Override
@@ -74,17 +94,51 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void DeleteNote(View view){
+        if(lastListItemSelected!=-1){
+            listNotes.deleteNote(lastListItemSelected);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listNotes.getTitles());
+            notelist.setAdapter(adapter);
+            lastListItemSelected = -1;
+            showText.setText("");
+            makeToast("Madam/Sir, your note has been deleted!");
+        }else{
+            makeToast("Hmm, nothing selected, cancelling delete to prevent anarchy and nihilistic tendencies");
+        }
+
+
+
+    }
+
     public void saveNote(View view){
         String str = inputText.getText().toString();
         String title = inputTitle.getText().toString();
-        listNotes.createListItem(title, str);
+        if(str.length()!=0 && title.length()!=0) {
+            listNotes.createListItem(title, str);
 
-        if(listNotes.getSize()>0){
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,listNotes.getTitles());
-            notelist.setAdapter(adapter);
+            if (listNotes.getSize() > 0) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listNotes.getTitles());
+                notelist.setAdapter(adapter);
 
+            }
+            inputText.setText("");
+            inputTitle.setText("");
+            makeToast("I exist to obey. Your note has been saved");
+        }else if(str.length()==0 && title.length()!=0){
+            makeToast("I am terribly sorry for the interruption, but it seems like you forgot to write your note");
+        }else if(title.length()==0 && str.length()!=0){
+            makeToast("Sorry to disturb, but it seems like you forgot to give your note a name");
+        }else if(title.length()==0 && str.length()==0){
+            makeToast("Hmm. Are you really sure you have something to remember?");
         }
+    }
 
+    public void makeToast(String info){
+        Context context = getApplicationContext();
+        CharSequence text = info;
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context,text,duration);
+        toast.show();
     }
 
 

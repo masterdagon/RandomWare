@@ -1,5 +1,7 @@
 package com.example.muggi.randombebop;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 
 /**
@@ -8,8 +10,11 @@ import java.util.ArrayList;
 public class ListNotes {
 
     public ArrayList<String[]> notes = new ArrayList();
+    public FileWriter fw = new FileWriter();
+    public Context context = null;
 
-    public ListNotes(){
+    public ListNotes(Context context){
+        this.context = context;
     }
 
     public void createListItem(String title, String note){
@@ -17,9 +22,11 @@ public class ListNotes {
         array[0]=title;
         array[1]=note;
         this.notes.add(array);
+        savefile(notes);
     }
 
     public ArrayList<String[]> getNotes(){
+        loadfile();
         return notes;
     }
 
@@ -33,6 +40,19 @@ public class ListNotes {
             astr[i]=(notes.get(i)[0]);
         }
         return astr;
+    }
+
+    public void deleteNote(int position){
+        notes.remove(position);
+        savefile(notes);
+    }
+
+    public void savefile(ArrayList<String[]> notes){
+        fw.save(context,notes);
+    }
+
+    public void loadfile(){
+        notes = fw.load(context);
     }
 
 
