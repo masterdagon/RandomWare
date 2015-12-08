@@ -5,27 +5,29 @@ import android.content.Context;
 import java.util.ArrayList;
 
 /**
- * Created by Muggi on 16-11-2015.
+ * Created by Muggi on 07-12-2015.
  */
-public class ListNotes {
+public class ListNotes2 {
 
-    public ArrayList<String[]> notes = new ArrayList();
-    public FileWriter fw = new FileWriter();
+    public ArrayList<Note> notes = new ArrayList();
+    public FileWriter2 fw = new FileWriter2();
     public Context context = null;
 
-    public ListNotes(Context context){
+    public ListNotes2(Context context){
         this.context = context;
     }
 
-    public void createListItem(String title, String note){
-        String[] array = new String[3];
-        array[0]=title;
-        array[1]=note;
-        this.notes.add(array);
+    public void createListItem(String note){
+        Note n = new Note(note);
+        this.notes.add(n);
+        savefile(notes);
+    }
+    public void addNoteToList(Note note){
+        this.notes.add(note);
         savefile(notes);
     }
 
-    public ArrayList<String[]> getNotes(){
+    public ArrayList<Note> getNotes(){
         loadfile();
         return notes;
     }
@@ -37,7 +39,7 @@ public class ListNotes {
     public String[] getTitles(){
         String[] astr = new String[notes.size()];
         for(int i = 0; i<notes.size();i++){
-            astr[i]=(notes.get(i)[0]);
+            astr[i]=(notes.get(i).getName());
         }
         return astr;
     }
@@ -47,13 +49,11 @@ public class ListNotes {
         savefile(notes);
     }
 
-    public void savefile(ArrayList<String[]> notes){
+    public void savefile(ArrayList<Note> notes){
         fw.save(context,notes);
     }
 
     public void loadfile(){
         notes = fw.load(context);
     }
-
-
 }

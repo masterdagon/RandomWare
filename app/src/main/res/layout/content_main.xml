@@ -58,6 +58,14 @@
         android:layout_below="@id/buttonDelete"
         android:text="@string/response"/>
 
+    <Button
+        android:id="@+id/takePicture"
+        android:layout_below="@+id/responseText"
+        android:text="Take picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="takePicture"/>
+
 
 
 
