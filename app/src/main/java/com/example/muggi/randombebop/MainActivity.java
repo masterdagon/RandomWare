@@ -197,9 +197,6 @@ public class MainActivity extends AppCompatActivity {
                 makeToast("Something went wrong");
             }
         }
-
-
-        //add something do attach note to file, filename is saved in var lastFilename.
     }
 
 
