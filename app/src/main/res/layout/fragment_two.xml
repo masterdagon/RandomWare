@@ -13,4 +13,29 @@
         android:layout_weight="1"
         android:text="This is the second fragment"
         android:textStyle="bold"/>
+    <ListView
+        android:id="@+id/list"
+        android:layout_alignParentTop="true"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp"
+        android:background="#400000FF" />
+
+    <Button
+        android:id="@+id/buttonDelete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/list"
+        android:text="Delete"
+        android:onClick="deleteNote"/>
+    <TextView
+        android:id="@+id/responseText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonDelete"
+        android:text="@string/response"/>
+    <ImageView
+        android:id="@+id/imagef2"
+        android:layout_below="@+id/responseText"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>

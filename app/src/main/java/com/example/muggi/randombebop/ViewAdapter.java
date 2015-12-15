@@ -1,18 +1,29 @@
 package com.example.muggi.randombebop;
 
-import android.os.Bundle;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 
 /**
  * Created by Michael on 08/12/15.
  */
 public class ViewAdapter extends FragmentPagerAdapter {
 
+    public Fragment f1;
+    public Fragment f2;
+    public FragmentManager fm;
+    public FragmentTransaction ft;
+
     public ViewAdapter(FragmentManager fm){
 
         super(fm);
+        this.fm = fm;
+
+        f1 = FragmentOne.newInstance("f1");
+        f2 = FragmentTwo.newInstance("f2");
+
     }
 
     @Override
@@ -22,11 +33,12 @@ public class ViewAdapter extends FragmentPagerAdapter {
         changedPosition = position%2;
         switch(changedPosition){
 
-            case 0: return FragmentOne.newInstance("Fragment One; instance: "+position);
-            case 1: return FragmentTwo.newInstance("Fragment Two; instance: "+position);
-            default: return FragmentOne.newInstance("Fragment One; default; position: "+position);
+            case 0: f1 = FragmentOne.newInstance("f1"); return f1;
+            case 1: f2 = FragmentTwo.newInstance("f2"); return f2;
+            default: f1 = FragmentOne.newInstance("f1"); return f1;
         }
     }
+
 
     @Override
     public int getCount() {

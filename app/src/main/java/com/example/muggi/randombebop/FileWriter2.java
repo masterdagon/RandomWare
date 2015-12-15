@@ -83,7 +83,7 @@ public class FileWriter2 {
             while ((content = fis.read()) != -1) {
                 // convert to char and display it
                 data = data + (char) content;
-                Log.i("MESSAGE LOADED: ", data);
+                //Log.i("MESSAGE LOADED: ", data);
             }
             String[] entries = data.split(";");
 

@@ -1,16 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#00ffff">
+    android:background="#ffff00">
 
     <TextView
         android:id="@+id/fragmentTitle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:text="This is the first fragment"
         android:textStyle="bold"/>
-</LinearLayout>
+    <EditText
+        android:id="@+id/noteTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Title"
+        android:padding='12dip'
+        android:layout_alignParentTop="true"/>
+    <EditText
+        android:id="@+id/noteInput"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Type in your note"
+        android:padding='12dip'
+        android:layout_below="@id/noteTitle"/>
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/noteInput"
+        android:text="Save"
+        android:onClick="saveNote"/>
+    <Button
+        android:id="@+id/takePicture"
+        android:layout_below="@+id/buttonSave"
+        android:text="Take picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="takePicture"/>
+    <ImageView
+        android:id="@+id/imagef1"
+        android:layout_below="@+id/takePicture"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+</RelativeLayout>
