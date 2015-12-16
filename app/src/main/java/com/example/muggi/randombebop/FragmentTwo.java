@@ -40,21 +40,32 @@ public class FragmentTwo extends Fragment {
     public static MainActivity activity;
     public ImageView imageView;
 
+    public View rootView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        activity = ((MainActivity) getActivity());
-
-
-        View rootView = inflater.inflate(R.layout.fragment_two, container, false);
-        notelist = (ListView) rootView.findViewById(R.id.list);
-        showText = (TextView) rootView.findViewById(R.id.responseText);
-        Bundle args = getArguments();
-        TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
-        //tw.setText(args.getString("msg"));
-        initList();
-        imageView = (ImageView)rootView.findViewById(R.id.imagef2);
+        if(rootView==null) {
+            activity = ((MainActivity) getActivity());
+            rootView = inflater.inflate(R.layout.fragment_two, container, false);
+            notelist = (ListView) rootView.findViewById(R.id.list);
+            showText = (TextView) rootView.findViewById(R.id.responseText);
+            Bundle args = getArguments();
+            TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
+            //tw.setText(args.getString("msg"));
+            initList();
+            imageView = (ImageView) rootView.findViewById(R.id.imagef2);
+        }else{
+//            ((ViewGroup)rootView.getParent()).removeView(rootView);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (rootView.getParent() != null) {
+            ((ViewGroup)rootView.getParent()).removeView(rootView);
+        }
+        super.onDestroyView();
     }
 
     public static Fragment newInstance(String text) {
@@ -63,6 +74,7 @@ public class FragmentTwo extends Fragment {
         b.putString("msg", text);
 
         f.setArguments(b);
+
 
         return f;
     }

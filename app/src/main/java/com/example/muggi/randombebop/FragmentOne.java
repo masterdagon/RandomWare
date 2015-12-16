@@ -38,33 +38,46 @@ public class FragmentOne extends Fragment {
     public ListNotes2 listNotes;
     public ImageView imageView;
 
+    public View rootView;
+
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        activity = ((MainActivity)getActivity());
-        listNotes = activity.listNotes;
-
-
+//        listNotes = ((MainActivity)getActivity()).listNotes;
+//
+//        inputText = (EditText) getView().findViewById(R.id.noteInput);
+//        inputTitle = (EditText) getView().findViewById(R.id.noteTitle);
+//        imageView = (ImageView) getView().findViewById(R.id.imagef1);
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-
-        activity = ((MainActivity)getActivity());
-        View rootView = inflater.inflate(R.layout.fragment_one, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if(rootView==null) {
+        activity = ((MainActivity) getActivity());
+        rootView = inflater.inflate(R.layout.fragment_one, container, false);
         Bundle args = getArguments();
         TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
-//        tw.setText(args.getString("msg"));
         listNotes = activity.listNotes;
 
-            inputText = (EditText) rootView.findViewById(R.id.noteInput);
-            inputTitle = (EditText) rootView.findViewById(R.id.noteTitle);
-            imageView = (ImageView)rootView.findViewById(R.id.imagef1);
-
+        inputTitle = (EditText) rootView.findViewById(R.id.noteTitle);
+        imageView = (ImageView) rootView.findViewById(R.id.imagef1);
+        inputText = (EditText) rootView.findViewById(R.id.noteInput);
+        }else{
+//            ((ViewGroup)rootView.getParent()).removeView(rootView);
+        }
         return rootView;
     }
+
+    @Override
+    public void onDestroyView() {
+        if (rootView.getParent() != null) {
+            ((ViewGroup) rootView.getParent()).removeView(rootView);
+        }
+        super.onDestroyView();
+    }
+
     public static Fragment newInstance(String text) {
 
         Fragment f = new FragmentOne();
@@ -76,12 +89,12 @@ public class FragmentOne extends Fragment {
         return f;
     }
 
-    public void setAttachToPicture(boolean state){
+    public void setAttachToPicture(boolean state) {
         attachToPicture = state;
-        if(state){
-            File imgFile = new  File(lastUri.getPath());
+        if (state) {
+            File imgFile = new File(lastUri.getPath());
 
-            if(imgFile.exists()){
+            if (imgFile.exists()) {
 
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
@@ -91,17 +104,9 @@ public class FragmentOne extends Fragment {
         }
     }
 
-    public void setLastUri(Uri uri){
+    public void setLastUri(Uri uri) {
         lastUri = uri;
     }
-
-//    private void initViewParts(){
-//        activity = (MainActivity)this.getActivity();
-//       // listNotes = activity.listNotes;
-//        inputText = (EditText)this.getView().findViewById(R.id.noteInput);
-//        inputTitle = (EditText)this.getView().findViewById(R.id.noteTitle);
-//
-//    }
 
     public void saveNote() {
 
@@ -110,10 +115,10 @@ public class FragmentOne extends Fragment {
         String title = inputTitle.getText().toString();
         if (str.length() != 0) {
             Note note = new Note(str);
-            if(title.length()>0){
+            if (title.length() > 0) {
                 note.setName(title);
             }
-            if(attachToPicture){
+            if (attachToPicture) {
                 note.setPicture(lastUri.getPath());
                 attachToPicture = false;
             }
@@ -125,18 +130,16 @@ public class FragmentOne extends Fragment {
         } else if (str.length() == 0 && title.length() != 0) {
             activity.makeToast("I am terribly sorry for the interruption, but it seems like you forgot to write your note");
         }
-//         else if (title.length() == 0 && str.length() != 0) {
-//           makeToast("Sorry to disturb, but it seems like you forgot to give your note a name");
-//        }
         else if (title.length() == 0 && str.length() == 0) {
             activity.makeToast("Hmm. Are you really sure you have something to remember?");
         }
     }
-    @Override
-    public void onResume(){
-        super.onResume();
-        listNotes = activity.listNotes;
-        inputText = (EditText)this.getView().findViewById(R.id.noteInput);
-        inputTitle = (EditText)this.getView().findViewById(R.id.noteTitle);
-    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        listNotes = activity.listNotes;
+//        inputText = (EditText) this.getView().findViewById(R.id.noteInput);
+//        inputTitle = (EditText) this.getView().findViewById(R.id.noteTitle);
+//    }
 }

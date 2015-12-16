@@ -16,13 +16,13 @@ public class ViewAdapter extends FragmentPagerAdapter {
     public FragmentManager fm;
     public FragmentTransaction ft;
 
-    public ViewAdapter(FragmentManager fm){
+    public ViewAdapter(FragmentManager fm) {
 
         super(fm);
         this.fm = fm;
 
-        f1 = FragmentOne.newInstance("f1");
-        f2 = FragmentTwo.newInstance("f2");
+//        f1 = FragmentOne.newInstance("f1");
+//        f2 = FragmentTwo.newInstance("f2");
 
     }
 
@@ -30,13 +30,23 @@ public class ViewAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         int changedPosition;
-        changedPosition = position%2;
-        switch(changedPosition){
+        changedPosition = position % 2;
 
-            case 0: f1 = FragmentOne.newInstance("f1"); return f1;
-            case 1: f2 = FragmentTwo.newInstance("f2"); return f2;
-            default: f1 = FragmentOne.newInstance("f1"); return f1;
+        switch (changedPosition) {
+
+            case 0:
+                f1 = FragmentOne.newInstance("f1");
+                    return f1;
+
+            case 1:
+                    f2 = FragmentTwo.newInstance("f2");
+                    return f2;
+            default:
+                    f1 = FragmentOne.newInstance("f1");
+                    return f1;
         }
+
+
     }
 
 
@@ -46,8 +56,8 @@ public class ViewAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position){
+    public CharSequence getPageTitle(int position) {
 
-        return "OBJECT " + (position+1);
+        return "OBJECT " + (position + 1);
     }
 }

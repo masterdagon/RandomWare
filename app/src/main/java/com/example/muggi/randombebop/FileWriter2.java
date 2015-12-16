@@ -85,17 +85,18 @@ public class FileWriter2 {
                 data = data + (char) content;
                 //Log.i("MESSAGE LOADED: ", data);
             }
-            String[] entries = data.split(";");
+            if(!data.equals("")) {
+                String[] entries = data.split(";");
 
-            for (String str : entries) {
-                String[] entry = str.split(",");
-                Note note = new Note(entry[1]);
-                note.setName(entry[0]);
-                note.setCategory(entry[2]);
-                note.setPicture(entry[3]);
-                list.add(note);
+                for (String str : entries) {
+                    String[] entry = str.split(",");
+                    Note note = new Note(entry[1]);
+                    note.setName(entry[0]);
+                    note.setCategory(entry[2]);
+                    note.setPicture(entry[3]);
+                    list.add(note);
+                }
             }
-
 
 
         } catch (IOException e) {
