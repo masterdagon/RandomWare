@@ -27,7 +27,7 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    public ListNotes2 listNotes;
+    public ListNotes3 listNotes;
     public ViewPager viewPager;
     public ViewAdapter viewAdapter;
     private static Context context;
@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MainActivity.context = getApplicationContext();
-        listNotes = new ListNotes2(context);
-        listNotes.loadfile();
+        listNotes = new ListNotes3();
+        listNotes.loadAllNoteNames();
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void saveNote(View view) {
-        ((FragmentOne) viewAdapter.f1).saveNote();
+        ((FragmentOne) viewAdapter.f1).saveNote(0);
         ((FragmentTwo) viewAdapter.f2).updateList();
     }
 

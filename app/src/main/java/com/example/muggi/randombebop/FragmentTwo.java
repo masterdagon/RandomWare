@@ -32,9 +32,11 @@ public class FragmentTwo extends Fragment {
 
 
     public TextView showText;
-    public ListNotes2 listNotes;
+    public ListNotes3 listNotes;
     public ListView notelist;
     public int lastListItemSelected = -1;
+    public EditText inputText;
+    public EditText inputTitle;
 
     public static final String ARG_OBJECT = "FRAGMENT2";
     public static MainActivity activity;
@@ -100,8 +102,10 @@ public class FragmentTwo extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 lastListItemSelected=position;
-                String str = listNotes.getNotes().get(position).getMessage();
-                String path = listNotes.getNotes().get(position).getPicture();
+                System.out.println("this is Posistion "+ position);
+                Note node = listNotes.loadFromPosition(position);
+                String str = node.getMessage();
+                String path = node.getPicture();
                 showText.setText(str);
 
                 if(!path.equals("NOTSET")){

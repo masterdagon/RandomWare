@@ -35,9 +35,9 @@ public class FragmentOne extends Fragment {
     public EditText inputTitle;
     public boolean attachToPicture = false;
     public Uri lastUri;
-    public ListNotes2 listNotes;
+    public ListNotes3 listNotes;
     public ImageView imageView;
-
+    private int test=0;
     public View rootView;
 
     @Override
@@ -60,13 +60,13 @@ public class FragmentOne extends Fragment {
         Bundle args = getArguments();
         TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
         listNotes = activity.listNotes;
-
-        inputTitle = (EditText) rootView.findViewById(R.id.noteTitle);
-        imageView = (ImageView) rootView.findViewById(R.id.imagef1);
-        inputText = (EditText) rootView.findViewById(R.id.noteInput);
+            inputTitle = (EditText) rootView.findViewById(R.id.noteTitle);
+            imageView = (ImageView) rootView.findViewById(R.id.imagef1);
+            inputText = (EditText) rootView.findViewById(R.id.noteInput);
         }else{
-//            ((ViewGroup)rootView.getParent()).removeView(rootView);
+           //((ViewGroup)rootView.getParent()).removeView(rootView);
         }
+        System.out.println("test = "+inputText.getText().toString());
         return rootView;
     }
 
@@ -108,21 +108,31 @@ public class FragmentOne extends Fragment {
         lastUri = uri;
     }
 
-    public void saveNote() {
-
-
+    public void saveNote(int id) {
         String str = inputText.getText().toString();
         String title = inputTitle.getText().toString();
         if (str.length() != 0) {
-            Note note = new Note(str);
+        if(id>0){
+            Note note1 = listNotes.getNote(id);
             if (title.length() > 0) {
-                note.setName(title);
+                note1.setName(title);
             }
             if (attachToPicture) {
-                note.setPicture(lastUri.getPath());
+                note1.setPicture(lastUri.getPath());
                 attachToPicture = false;
             }
-            listNotes.addNoteToList(note);
+            listNotes.saveOldNote(note1);
+        }else {
+                Note note2 = new Note(str, 0);
+                if (title.length() > 0) {
+                    note2.setName(title);
+                }
+                if (attachToPicture) {
+                    note2.setPicture(lastUri.getPath());
+                    attachToPicture = false;
+                }
+                listNotes.saveNewNote(note2);
+            }
             inputText.setText("");
             inputTitle.setText("");
             imageView.setImageBitmap(null);

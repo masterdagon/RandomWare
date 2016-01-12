@@ -18,7 +18,7 @@ public class ListNotes2 {
     }
 
     public void createListItem(String note){
-        Note n = new Note(note);
+        Note n = new Note(note,0);
         this.notes.add(n);
         savefile(notes);
     }

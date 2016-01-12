@@ -8,14 +8,19 @@ import android.os.Parcelable;
  */
 public class Note implements Parcelable{
 
+    private int id;
     private String message;
     private String title = "Untitled";
     private String category = "Unassigned";
     private String picture = "NOTSET";
 
-    public Note(String message){
+    public Note(String message,int id){
         this.message = message;
     }
+
+    public int getId() {return id;}
+
+    public void setId(int id) {this.id = id;}
 
     public String getMessage() {
         return message;
@@ -56,6 +61,7 @@ public class Note implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(message);
         dest.writeString(title);
         dest.writeString(category);
@@ -63,6 +69,7 @@ public class Note implements Parcelable{
     }
 
     private Note(Parcel in){
+        this.id = in.readInt();
         this.message = in.readString();
         this.title = in.readString();
         this.category = in.readString();
