@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -52,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewAdapter = new ViewAdapter(getSupportFragmentManager());
+        try {
+            viewAdapter = new ViewAdapter(getSupportFragmentManager());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         viewPager.setAdapter(viewAdapter);
     }
 
@@ -83,6 +88,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void editButtonClick(View view) {
+        //((FragmentTwo)viewAdapter.f2).startEditView();
+        if (((FragmentTwo) viewAdapter.f2).lastListItemSelected < 0) {
+            makeToast("No note selected");
+        } else {
+            Note note = listNotes.getNotes().get(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+            int index = listNotes.findIndex(note);
+            Intent intentEdit = new Intent(this, ActivityDetails.class);
+            intentEdit.putExtra("selectedNote",note);
+            intentEdit.putExtra("index", index);
+            makeToast("index = " + index);
+            startActivityForResult(intentEdit, 13372);
+        }
+    }
 
     public void deleteNote(View view) {
         ((FragmentTwo) viewAdapter.f2).deleteNote(view);
@@ -92,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void saveNote(View view) {
         ((FragmentOne) viewAdapter.f1).saveNote();
-        ((FragmentTwo) viewAdapter.f2).updateList();
+        ((FragmentTwo) viewAdapter.f2).initList();
     }
 
     public void makeToast(String info) {
@@ -138,6 +157,30 @@ public class MainActivity extends AppCompatActivity {
                 ((FragmentOne) viewAdapter.f1).setAttachToPicture(true);
             } else if (resultCode == RESULT_CANCELED) {
                 makeToast("Image capture cancelled");
+            } else {
+                makeToast("Something went wrong");
+            }
+        }
+        if (reqCode == 13372) {
+            if (resultCode == RESULT_OK) {
+                Note note = intent.getParcelableExtra("selectedNote");
+                int index = intent.getIntExtra("index", -1);
+
+                try {
+                    listNotes.getNotes().remove(index);
+                  //  listNotes.getNotes().add(index, note);
+                    listNotes.addNoteToList(note);
+                    listNotes.savefile((listNotes.getNotes()));
+                   // listNotes.loadfile();
+                    ((FragmentTwo) viewAdapter.f2).initList();
+                    makeToast("Note edited and saved");
+                } catch (Exception e) {
+                    makeToast("Something is wrong with the index returned");
+                    e.printStackTrace();
+                }
+
+            } else if (resultCode == RESULT_CANCELED) {
+                makeToast("Edit note cancelled");
             } else {
                 makeToast("Something went wrong");
             }

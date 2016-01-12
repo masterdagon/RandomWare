@@ -8,13 +8,12 @@ import android.os.Parcelable;
  */
 public class Note implements Parcelable{
 
-    private String message;
-    private String title = "Untitled";
-    private String category = "Unassigned";
+    private String message = "*Empty*";
+    private String title = "*Empty*";
+    private String category = "*Empty*";
     private String picture = "NOTSET";
 
-    public Note(String message){
-        this.message = message;
+    public Note(){
     }
 
     public String getMessage() {

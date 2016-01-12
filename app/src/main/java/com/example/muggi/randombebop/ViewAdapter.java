@@ -15,14 +15,18 @@ public class ViewAdapter extends FragmentPagerAdapter {
     public Fragment f2;
     public FragmentManager fm;
     public FragmentTransaction ft;
+    private int last_pos = -1;
 
-    public ViewAdapter(FragmentManager fm) {
-
+    public ViewAdapter(FragmentManager fm) throws Exception{
         super(fm);
+        if(fm == null){
+            throw new Exception("FragmentManager findes ikke");
+        }
+
         this.fm = fm;
 
-//        f1 = FragmentOne.newInstance("f1");
-//        f2 = FragmentTwo.newInstance("f2");
+        f1 = FragmentOne.newInstance("f1");
+        f2 = FragmentTwo.newInstance("f2");
 
     }
 
@@ -32,14 +36,14 @@ public class ViewAdapter extends FragmentPagerAdapter {
         int changedPosition;
         changedPosition = position % 2;
 
-        switch (changedPosition) {
 
+        switch (changedPosition) {
             case 0:
                 f1 = FragmentOne.newInstance("f1");
                     return f1;
 
             case 1:
-                    f2 = FragmentTwo.newInstance("f2");
+                f2 = FragmentTwo.newInstance("f2");
                     return f2;
             default:
                     f1 = FragmentOne.newInstance("f1");

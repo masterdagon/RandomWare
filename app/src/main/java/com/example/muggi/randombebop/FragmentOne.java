@@ -1,28 +1,19 @@
 package com.example.muggi.randombebop;
 
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.muggi.randombebop.R;
-
 import java.io.File;
-import java.net.URI;
 
 /**
  * Created by Michael on 07/12/15.
@@ -33,41 +24,52 @@ public class FragmentOne extends Fragment {
     public static final String ARG_OBJECT = "FRAGMENT1";
     public EditText inputText;
     public EditText inputTitle;
+    public EditText inputCategory;
     public boolean attachToPicture = false;
     public Uri lastUri;
     public ListNotes2 listNotes;
     public ImageView imageView;
+    public static Fragment f;
 
     public View rootView;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-//        listNotes = ((MainActivity)getActivity()).listNotes;
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
 //
-//        inputText = (EditText) getView().findViewById(R.id.noteInput);
-//        inputTitle = (EditText) getView().findViewById(R.id.noteTitle);
-//        imageView = (ImageView) getView().findViewById(R.id.imagef1);
-
-    }
+//        super.onCreate(savedInstanceState);
+////        listNotes = ((MainActivity)getActivity()).listNotes;
+////
+////        inputText = (EditText) getView().findViewById(R.id.noteInput);
+////        inputTitle = (EditText) getView().findViewById(R.id.noteTitle);
+////        imageView = (ImageView) getView().findViewById(R.id.imagef1);
+//
+//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(rootView==null) {
         activity = ((MainActivity) getActivity());
         rootView = inflater.inflate(R.layout.fragment_one, container, false);
         Bundle args = getArguments();
         TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
         listNotes = activity.listNotes;
-
         inputTitle = (EditText) rootView.findViewById(R.id.noteTitle);
         imageView = (ImageView) rootView.findViewById(R.id.imagef1);
-        inputText = (EditText) rootView.findViewById(R.id.noteInput);
-        }else{
-//            ((ViewGroup)rootView.getParent()).removeView(rootView);
-        }
+        inputText = (EditText) rootView.findViewById(R.id.noteMsg);
+        inputTitle.setText("");
+        inputCategory = (EditText)rootView.findViewById(R.id.noteCat);
+        imageView.setImageBitmap(null);
+        inputText.setText("");
         return rootView;
+    }
+
+    public void refreshID(){
+        inputTitle = (EditText) rootView.findViewById(R.id.noteTitle);
+        imageView = (ImageView) rootView.findViewById(R.id.imagef1);
+        inputText = (EditText) rootView.findViewById(R.id.noteMsg);
+        inputTitle.setText("");
+        inputCategory = (EditText)rootView.findViewById(R.id.noteCat);
+        imageView.setImageBitmap(null);
+        inputText.setText("");
     }
 
     @Override
@@ -79,11 +81,9 @@ public class FragmentOne extends Fragment {
     }
 
     public static Fragment newInstance(String text) {
-
-        Fragment f = new FragmentOne();
+        FragmentOne f = new FragmentOne();
         Bundle b = new Bundle();
         b.putString("msg", text);
-
         f.setArguments(b);
 
         return f;
@@ -93,13 +93,9 @@ public class FragmentOne extends Fragment {
         attachToPicture = state;
         if (state) {
             File imgFile = new File(lastUri.getPath());
-
             if (imgFile.exists()) {
-
                 Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
                 imageView.setImageBitmap(myBitmap);
-
             }
         }
     }
@@ -109,14 +105,19 @@ public class FragmentOne extends Fragment {
     }
 
     public void saveNote() {
-
-
         String str = inputText.getText().toString();
         String title = inputTitle.getText().toString();
-        if (str.length() != 0) {
-            Note note = new Note(str);
+        String category = inputCategory.getText().toString();
+        if (str.length() != 0 || title.length()!=0) {
+            Note note = new Note();
             if (title.length() > 0) {
                 note.setName(title);
+            }
+            if(str.length()>0){
+                note.setMessage(str);
+            }
+            if(category.length()>0){
+                note.setCategory(category);
             }
             if (attachToPicture) {
                 note.setPicture(lastUri.getPath());
@@ -125,21 +126,11 @@ public class FragmentOne extends Fragment {
             listNotes.addNoteToList(note);
             inputText.setText("");
             inputTitle.setText("");
+            inputCategory.setText("");
             imageView.setImageBitmap(null);
             activity.makeToast("I exist to obey. Your note has been saved");
-        } else if (str.length() == 0 && title.length() != 0) {
-            activity.makeToast("I am terribly sorry for the interruption, but it seems like you forgot to write your note");
-        }
-        else if (title.length() == 0 && str.length() == 0) {
+        } else if (title.length() == 0 && str.length() == 0) {
             activity.makeToast("Hmm. Are you really sure you have something to remember?");
         }
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        listNotes = activity.listNotes;
-//        inputText = (EditText) this.getView().findViewById(R.id.noteInput);
-//        inputTitle = (EditText) this.getView().findViewById(R.id.noteTitle);
-//    }
 }

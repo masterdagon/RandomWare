@@ -90,8 +90,9 @@ public class FileWriter2 {
 
                 for (String str : entries) {
                     String[] entry = str.split(",");
-                    Note note = new Note(entry[1]);
+                    Note note = new Note();
                     note.setName(entry[0]);
+                    note.setMessage(entry[1]);
                     note.setCategory(entry[2]);
                     note.setPicture(entry[3]);
                     list.add(note);
