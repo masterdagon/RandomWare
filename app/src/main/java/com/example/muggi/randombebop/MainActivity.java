@@ -93,13 +93,14 @@ public class MainActivity extends AppCompatActivity {
         if (((FragmentTwo) viewAdapter.f2).lastListItemSelected < 0) {
             makeToast("No note selected");
         } else {
-            Note note = listNotes.getNotes().get(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
-            int index = listNotes.findIndex(note);
-            Intent intentEdit = new Intent(this, ActivityDetails.class);
-            intentEdit.putExtra("selectedNote",note);
-            intentEdit.putExtra("index", index);
-            makeToast("index = " + index);
-            startActivityForResult(intentEdit, 13372);
+            //Mising something
+            //Note note = listNotes.getNotes().get(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+            //int index = listNotes.findIndex(note);
+            //Intent intentEdit = new Intent(this, ActivityDetails.class);
+            //intentEdit.putExtra("selectedNote",note);
+            //intentEdit.putExtra("index", index);
+            //makeToast("index = " + index);
+            //startActivityForResult(intentEdit, 13372);
         }
     }
 
@@ -167,10 +168,10 @@ public class MainActivity extends AppCompatActivity {
                 int index = intent.getIntExtra("index", -1);
 
                 try {
-                    listNotes.getNotes().remove(index);
+                   // listNotes.getNotes().remove(index);
                   //  listNotes.getNotes().add(index, note);
-                    listNotes.addNoteToList(note);
-                    listNotes.savefile((listNotes.getNotes()));
+                   // listNotes.addNoteToList(note);
+                    //listNotes.savefile((listNotes.getNotes()));
                    // listNotes.loadfile();
                     ((FragmentTwo) viewAdapter.f2).initList();
                     makeToast("Note edited and saved");
