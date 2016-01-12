@@ -3,10 +3,14 @@ package com.example.muggi.randombebop;
 
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -35,8 +39,6 @@ public class FragmentTwo extends Fragment {
     public ListNotes3 listNotes;
     public ListView notelist;
     public int lastListItemSelected = -1;
-    public EditText inputText;
-    public EditText inputTitle;
 
     public static final String ARG_OBJECT = "FRAGMENT2";
     public static MainActivity activity;
@@ -46,26 +48,35 @@ public class FragmentTwo extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        if(rootView==null) {
-            activity = ((MainActivity) getActivity());
-            rootView = inflater.inflate(R.layout.fragment_two, container, false);
-            notelist = (ListView) rootView.findViewById(R.id.list);
-            showText = (TextView) rootView.findViewById(R.id.responseText);
-            Bundle args = getArguments();
-            TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
-            //tw.setText(args.getString("msg"));
-            initList();
-            imageView = (ImageView) rootView.findViewById(R.id.imagef2);
-        }else{
-//            ((ViewGroup)rootView.getParent()).removeView(rootView);
-        }
+        activity = ((MainActivity) getActivity());
+        rootView = inflater.inflate(R.layout.fragment_two, container, false);
+
+        Bundle args = getArguments();
+        TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
+        //tw.setText(args.getString("msg"));
+        notelist = (ListView) rootView.findViewById(R.id.list);
+        showText = (TextView) rootView.findViewById(R.id.responseText);
+        imageView = (ImageView) rootView.findViewById(R.id.imagef2);
+        listNotes = activity.listNotes;
+        initList();
         return rootView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        activity = ((MainActivity) getActivity());
+        notelist = (ListView) rootView.findViewById(R.id.list);
+        showText = (TextView) rootView.findViewById(R.id.responseText);
+        imageView = (ImageView) rootView.findViewById(R.id.imagef2);
+        listNotes = activity.listNotes;
+        initList();
     }
 
     @Override
     public void onDestroyView() {
         if (rootView.getParent() != null) {
-            ((ViewGroup)rootView.getParent()).removeView(rootView);
+            ((ViewGroup) rootView.getParent()).removeView(rootView);
         }
         super.onDestroyView();
     }
@@ -77,21 +88,10 @@ public class FragmentTwo extends Fragment {
 
         f.setArguments(b);
 
-
         return f;
     }
 
-    public void updateList() {
-        listNotes = activity.listNotes;
-        if (listNotes.getSize() > 0) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
-            notelist.setAdapter(adapter);
-
-        }
-    }
-
     public void initList() {
-        listNotes = activity.listNotes;
         if (listNotes.getSize() > 0) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
             notelist.setAdapter(adapter);
@@ -107,20 +107,21 @@ public class FragmentTwo extends Fragment {
                 String str = node.getMessage();
                 String path = node.getPicture();
                 showText.setText(str);
+                activity.makeToast("Position: " + position);
 
-                if(!path.equals("NOTSET")){
-                    File imgFile = new  File(path);
+                if (!path.equals("NOTSET")) {
+                    File imgFile = new File(path);
 
-                    if(imgFile.exists()){
+                    if (imgFile.exists()) {
 
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
                         imageView.setImageBitmap(myBitmap);
 
-                    }else{
+                    } else {
                         imageView.setImageBitmap(null);
                     }
-                }else{
+                } else {
                     imageView.setImageBitmap(null);
                 }
             }

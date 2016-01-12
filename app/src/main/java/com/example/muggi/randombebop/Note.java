@@ -9,15 +9,18 @@ import android.os.Parcelable;
 public class Note implements Parcelable{
 
     private int id;
-    private String message;
-    private String title = "Untitled";
-    private String category = "Unassigned";
+    private String message = "*Empty*";
+    private String title = "*Empty*";
+    private String category = "*Empty*";
     private String picture = "NOTSET";
 
     public Note(String message,int id){
         this.message = message;
     }
 
+    public Note(){
+    }
+    
     public int getId() {return id;}
 
     public void setId(int id) {this.id = id;}
