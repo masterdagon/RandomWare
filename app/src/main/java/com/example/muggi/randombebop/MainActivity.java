@@ -142,6 +142,16 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(imageIntent, 1337);
     }
 
+    public void showPictureInGallery(View view){
+        // get picture URI
+        String pictureURI;
+        Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+        pictureURI = note.getPicture();
+
+        Intent showImageIntent = new Intent(Intent.ACTION_VIEW);
+        startActivity(showImageIntent);
+    }
+
     @Override
     public void onActivityResult(int reqCode, int resultCode, Intent intent) {
         if (reqCode == 1337) {
