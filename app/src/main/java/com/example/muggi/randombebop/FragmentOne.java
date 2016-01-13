@@ -132,6 +132,7 @@ public class FragmentOne extends Fragment {
             }
             inputText.setText("");
             inputTitle.setText("");
+            inputCategory.setText("");
             imageView.setImageBitmap(null);
             activity.makeToast("I exist to obey. Your note has been saved");
         } else if (str.length() == 0 && title.length() != 0) {
