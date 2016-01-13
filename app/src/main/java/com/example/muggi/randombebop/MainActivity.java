@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intentEdit = new Intent(this, ActivityDetails.class);
             intentEdit.putExtra("selectedNote", note);
             intentEdit.putExtra("index", index);
-            makeToast("index = " + index);
+            makeToast("id in editButtonClick = " + note.getId() );
             startActivityForResult(intentEdit, 13372);
         }
     }
@@ -167,18 +167,19 @@ public class MainActivity extends AppCompatActivity {
         }
         if (reqCode == 13372) {
             if (resultCode == RESULT_OK) {
-                Note note = intent.getParcelableExtra("selectedNote");
-                int index = intent.getIntExtra("index", -1);
+                Note note = intent.getParcelableExtra("result");
 
                 try {
-                    listNotes.notes.remove(index);
-                    listNotes.notes.add(index, note);
-                    listNotes.saveOldNote((note));
+                    listNotes.updateNote(note);
                     ((FragmentTwo) viewAdapter.f2).initList();
                     makeToast("Note edited and saved... hopefully");
                 } catch (Exception e) {
-                    makeToast("Something is wrong with the index returned");
+                    makeToast("Exception thrown");
                     e.printStackTrace();
+                    System.out.println(note.getId());
+                    System.out.println(note.getMessage());
+                    System.out.println(note.getName());
+                    System.out.println(note.getCategory());
                 }
 
             } else if (resultCode == RESULT_CANCELED) {
