@@ -154,7 +154,7 @@ public class FileWriter3 {
     }
 
     public boolean deleteNote(Note note) {
-        File file = new File(filedir.getPath()+note.getId()+".txt");
+        File file = new File(filedir.getPath()+"/"+note.getId()+".txt");
         boolean deleted = file.delete();
         return deleted;
     }
