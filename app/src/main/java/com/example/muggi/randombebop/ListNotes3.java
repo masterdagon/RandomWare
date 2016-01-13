@@ -48,7 +48,7 @@ public class ListNotes3 {
     public ArrayList<Note> loadAll() {
         System.out.println("i ran this");
         ArrayList<Note> temp = fw.loadAllFiles();
-        System.out.println("i ran this to "+temp.get(1).getId());
+      //  System.out.println("i ran this to "+temp.get(1).getId());
         notes.addAll(temp);
         for (Note n: notes) {
             System.out.print("test id"+ n.getId());
@@ -105,6 +105,7 @@ public class ListNotes3 {
         if (found) {
             notes.remove(index);
             notes.add(index, note);
+            saveOldNote(note);
         }
         return found;
     }

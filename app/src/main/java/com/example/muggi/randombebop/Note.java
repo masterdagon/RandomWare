@@ -8,7 +8,7 @@ import android.os.Parcelable;
  */
 public class Note implements Parcelable{
 
-    private int id;
+    private int id = -1;
     private String message = "*Empty*";
     private String title = "*Empty*";
     private String category = "*Empty*";
