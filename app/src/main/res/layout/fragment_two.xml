@@ -45,5 +45,6 @@
         android:id="@+id/imagef2"
         android:layout_below="@+id/responseText"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:onClick="showPictureInGallery"/>
 </RelativeLayout>
