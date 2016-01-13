@@ -82,9 +82,12 @@ public class ListNotes3 {
         return astr;
     }
 
-    public void deleteNote(int position) {
-        notes.remove(position);
-        fw.deleteNote(notes.get(position));
+    public boolean deleteNote(int position) {
+        boolean deleted= fw.deleteNote(notes.get(position));
+        if(deleted){
+            notes.remove(position);
+        }
+        return deleted;
     }
 
     public boolean updateNote(Note note) {

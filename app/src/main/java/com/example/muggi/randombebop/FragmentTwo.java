@@ -131,12 +131,16 @@ public class FragmentTwo extends Fragment {
 
     public void deleteNote(View view) {
         if (lastListItemSelected != -1) {
-            listNotes.deleteNote(lastListItemSelected);
+            boolean deleted = listNotes.deleteNote(lastListItemSelected);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
             notelist.setAdapter(adapter);
             lastListItemSelected = -1;
             showText.setText("");
-            activity.makeToast("Madam/Sir, your note has been deleted!");
+            if(deleted){
+                activity.makeToast("Madam/Sir, your note has been deleted!");
+            }else{
+                activity.makeToast("Madam/Sir, Somthing went wrong!");
+            }
         } else {
             activity.makeToast("Hmm, nothing selected, cancelling delete to prevent anarchy and nihilistic tendencies");
         }

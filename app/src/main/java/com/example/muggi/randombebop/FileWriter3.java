@@ -154,7 +154,9 @@ public class FileWriter3 {
     }
 
     public boolean deleteNote(Note note) {
-        return false;
+        File file = new File(filedir.getPath()+note.getId()+".txt");
+        boolean deleted = file.delete();
+        return deleted;
     }
 
     public boolean saveCategories(ArrayList<Category> cat) {
