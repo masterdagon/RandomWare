@@ -34,6 +34,14 @@
         android:layout_below="@id/buttonEdit"
         android:text="Delete"
         android:onClick="deleteNote"/>
+    <Button
+        android:id="@+id/buttonbluetooth"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonDelete"
+        android:text="Share"
+        android:onClick="share"/>
+
     <TextView
         android:id="@+id/responseText"
         android:layout_width="fill_parent"
@@ -46,4 +54,5 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:onClick="showPictureInGallery"/>
+
 </RelativeLayout>

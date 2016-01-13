@@ -26,8 +26,9 @@ public class ListNotes3 {
         return null;
     }
 
-    public Note loadFromPosition(int position) {
-        return loadNote(notes.get(position));
+    public Note getNotePosition(int position) {
+
+        return notes.get(position);
     }
 
 
