@@ -111,6 +111,7 @@ public class FragmentOne extends Fragment {
         if (str.length() != 0) {
         if(id>0){
             Note note1 = listNotes.getNote(id);
+            note1.setMessage(str);
             if (title.length() > 0) {
                 note1.setName(title);
             }
@@ -120,7 +121,8 @@ public class FragmentOne extends Fragment {
             }
             listNotes.saveOldNote(note1);
         }else {
-                Note note2 = new Note(str, 0);
+                Note note2 = new Note(0);
+                note2.setMessage(str);
                 if (title.length() > 0) {
                     note2.setName(title);
                 }

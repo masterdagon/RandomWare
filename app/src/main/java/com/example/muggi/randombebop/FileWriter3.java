@@ -3,6 +3,7 @@ package com.example.muggi.randombebop;
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,7 +21,6 @@ public class FileWriter3 {
 
     File filedir;
     File filedir2;
-    private int id = 0;
 
     public FileWriter3() {
         try {
@@ -39,7 +39,6 @@ public class FileWriter3 {
         } catch (Exception e) {
 
         }
-
     }
 
     public ArrayList<Note> loadAllFiles() {
@@ -51,8 +50,7 @@ public class FileWriter3 {
                 //inFiles.addAll(getAllFiles(file));
             } else {
                 if (file.getName().endsWith(".txt")) {
-                    Note note = new Note("NotLoaded", 0);
-                    note.setName(file.getName().substring(0, file.getName().length() - 4));
+                    Note note = new Note(Integer.parseInt(file.getName().substring(0, file.getName().length() - 4)));
                     inFiles.add(note);
                 }
             }
@@ -61,7 +59,7 @@ public class FileWriter3 {
     }
 
     public Note loadNote(Note note) {
-        File file = new File(filedir, note.getName() + ".txt");
+        File file = new File(filedir, note.getId() + ".txt");
         FileInputStream fis = null;
 
         try {
@@ -99,41 +97,6 @@ public class FileWriter3 {
         }
         return note;
     }
-
-//    public Note loadNote(Note note) {
-//        File sdcard = Environment.getExternalStorageDirectory();
-//        File file = new File(sdcard, note.getName()+".txt");
-//        StringBuilder text = new StringBuilder();
-//
-//        try {
-//            BufferedReader br = new BufferedReader(new FileReader(file));
-//            String line;
-//
-//            while ((line = br.readLine()) != null) {
-//                text.append(line);
-//                text.append('\n');
-//            }
-//            br.close();
-//        } catch (IOException e) {
-//            //You'll need to add proper error handling here
-//        }
-//
-//        if (!text.equals("")) {
-//            String[] entry = text.toString().split(",");
-//            int test = 0;
-//            for (String s:entry) {
-//                System.out.println(test+" "+s);
-//                test++;
-//            }
-//            note.setId(Integer.parseInt(entry[0]));
-//            note.setName(entry[1]);
-//            note.setMessage(entry[2]);
-//            note.setCategory(entry[3]);
-//            note.setPicture(entry[4]);
-//            return note;
-//        }
-//        return null;
-//    }
 
     public boolean saveNote(Note note, boolean newNote) {
         boolean succes = false;
@@ -246,43 +209,109 @@ public class FileWriter3 {
         ArrayList<Category> cat = new ArrayList<Category>();
         File file = new File(filedir2, "categories.txt");
         FileInputStream fis = null;
-
-        try {
-            fis = new FileInputStream(file);
-
-            System.out.println("Total file size to read (in bytes) : "
-                    + fis.available());
-
-            int content;
-            String data = "";
-            while ((content = fis.read()) != -1) {
-                // convert to char and display it
-                data = data + (char) content;
-                //Log.i("MESSAGE LOADED: ", data);
+        if(!file.exists()){
+            String[] temp = new String[]{"No Category","Sports","Hobby","School","Work","Fun"};
+            for (String s:temp) {
+                cat.add(new Category(s));
             }
-            System.out.println(data.toString());
-            if(!data.equals("")) {
-                String[] entry = data.split(",");
-                for (String s:entry) {
-                    Category category = new Category(s);
-                    cat.add(category);
+            return cat;
+        }else {
+            try {
+                fis = new FileInputStream(file);
+
+                System.out.println("Total file size to read (in bytes) : "
+                        + fis.available());
+
+                int content;
+                String data = "";
+                while ((content = fis.read()) != -1) {
+                    // convert to char and display it
+                    data = data + (char) content;
+                    //Log.i("MESSAGE LOADED: ", data);
                 }
+                System.out.println(data.toString());
+                if (!data.equals("")) {
+                    String[] entry = data.split(",");
+                    for (String s : entry) {
+                        Category category = new Category(s);
+                        cat.add(category);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fis != null)
+                        fis.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+            return cat;
+        }
+    }
+
+    public int loadId() {
+        int id =0;
+        File file = new File(filedir2, "id.txt");
+        FileInputStream fis = null;
+        if(!file.exists()){
+            return id;
+        }else {
+            try {
+                fis = new FileInputStream(file);
+                int content;
+                String data = "";
+                while ((content = fis.read()) != -1) {
+                    // convert to char and display it
+                    data = data + (char) content;
+                    //Log.i("MESSAGE LOADED: ", data);
+                }
+                id=Integer.parseInt(data.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    if (fis != null)
+                        fis.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+            return id;
+        }
+    }
+
+    public boolean saveId(int id) {
+        boolean succes = false;
+        String content = "";
+        FileOutputStream fop = null;
+        File file;
+        try {
+            file = new File(filedir2, "id.txt");
+            fop = new FileOutputStream(file);
+            file.createNewFile();
+            content=""+id;
+            // get the content in bytes
+            byte[] contentInBytes = content.getBytes();
+            fop.write(contentInBytes);
+            fop.flush();
+            fop.close();
+            succes = true;
+        } catch (Exception e) {
+
         } finally {
             try {
-                if (fis != null)
-                    fis.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                if (fop != null) {
+                    fop.close();
+                }
+                return succes;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return succes;
             }
-
         }
-        return cat;
-    }
-
-    public int loadID(){
-        return id;
-    }
+    };
 }

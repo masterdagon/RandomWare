@@ -14,7 +14,7 @@ public class Note implements Parcelable{
     private String category = "*Empty*";
     private String picture = "NOTSET";
 
-    public Note(String message,int id){
+    public Note(int id){
         this.message = message;
     }
 
