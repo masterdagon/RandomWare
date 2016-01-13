@@ -6,22 +6,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -93,14 +86,13 @@ public class MainActivity extends AppCompatActivity {
         if (((FragmentTwo) viewAdapter.f2).lastListItemSelected < 0) {
             makeToast("No note selected");
         } else {
-            //Mising something
-            //Note note = listNotes.getNotes().get(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
-            //int index = listNotes.findIndex(note);
-            //Intent intentEdit = new Intent(this, ActivityDetails.class);
-            //intentEdit.putExtra("selectedNote",note);
-            //intentEdit.putExtra("index", index);
-            //makeToast("index = " + index);
-            //startActivityForResult(intentEdit, 13372);
+            Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+            int index = ((FragmentTwo) viewAdapter.f2).lastListItemSelected;
+            Intent intentEdit = new Intent(this, ActivityDetails.class);
+            intentEdit.putExtra("selectedNote", note);
+            intentEdit.putExtra("index", index);
+            makeToast("index = " + index);
+            startActivityForResult(intentEdit, 13372);
         }
     }
 
@@ -168,13 +160,11 @@ public class MainActivity extends AppCompatActivity {
                 int index = intent.getIntExtra("index", -1);
 
                 try {
-                   // listNotes.getNotes().remove(index);
-                  //  listNotes.getNotes().add(index, note);
-                   // listNotes.addNoteToList(note);
-                    //listNotes.savefile((listNotes.getNotes()));
-                   // listNotes.loadfile();
+                    listNotes.notes.remove(index);
+                    listNotes.notes.add(index, note);
+                    listNotes.saveOldNote((note));
                     ((FragmentTwo) viewAdapter.f2).initList();
-                    makeToast("Note edited and saved");
+                    makeToast("Note edited and saved... hopefully");
                 } catch (Exception e) {
                     makeToast("Something is wrong with the index returned");
                     e.printStackTrace();
