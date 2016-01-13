@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             makeToast("No note selected");
         } else {
             Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+            note = listNotes.loadNote(note);
             int index = ((FragmentTwo) viewAdapter.f2).lastListItemSelected;
             Intent intentEdit = new Intent(this, ActivityDetails.class);
             intentEdit.putExtra("selectedNote", note);
@@ -140,6 +141,16 @@ public class MainActivity extends AppCompatActivity {
         ((FragmentOne) viewAdapter.f1).setLastUri(uriSavedImage);
         imageIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
         startActivityForResult(imageIntent, 1337);
+    }
+
+    public void showPictureInGallery(View view){
+        // get picture URI
+        String pictureURI;
+        Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+        pictureURI = note.getPicture();
+
+        Intent showImageIntent = new Intent(Intent.ACTION_VIEW);
+        startActivity(showImageIntent);
     }
 
     @Override

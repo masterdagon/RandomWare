@@ -13,7 +13,6 @@ public class ListNotes3 {
     public FileWriter3 fw = new FileWriter3();
     public int newID = 0;
 
-
     public ListNotes3() {
         categories=fw.loadCategories();
         newID=fw.loadId();

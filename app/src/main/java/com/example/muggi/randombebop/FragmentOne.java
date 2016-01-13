@@ -109,7 +109,7 @@ public class FragmentOne extends Fragment {
         String str = inputText.getText().toString();
         String title = inputTitle.getText().toString();
         if (str.length() != 0) {
-        if(id>0){
+        if(id>-1){
             Note note1 = listNotes.getNote(id);
             note1.setMessage(str);
             if (title.length() > 0) {

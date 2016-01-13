@@ -45,7 +45,6 @@ public class FileWriter3 {
         ArrayList<Note> inFiles = new ArrayList<Note>();
         File[] files = filedir.listFiles();
         for (File file : files) {
-            System.out.println(file.getName());
             if (file.isDirectory()) {
                 //inFiles.addAll(getAllFiles(file));
             } else {
