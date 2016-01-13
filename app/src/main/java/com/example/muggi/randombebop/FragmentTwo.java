@@ -63,8 +63,8 @@ public class FragmentTwo extends Fragment {
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
+    public void onStart(){
+        super.onStart();
         activity = ((MainActivity) getActivity());
         notelist = (ListView) rootView.findViewById(R.id.list);
         showText = (TextView) rootView.findViewById(R.id.responseText);
