@@ -15,6 +15,7 @@ public class Note implements Parcelable{
     private String picture = "NOTSET";
 
     public Note(int id){
+        this.id=id;
     }
 
     public Note(){

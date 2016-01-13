@@ -46,8 +46,12 @@ public class ListNotes3 {
     }
 
     public ArrayList<Note> loadAll() {
-        notes = fw.loadAllFiles();
+        System.out.println("i ran this");
+        ArrayList<Note> temp = fw.loadAllFiles();
+        System.out.println("i ran this to "+temp.get(1).getId());
+        notes.addAll(temp);
         for (Note n: notes) {
+            System.out.print("test id"+ n.getId());
             n = fw.loadNote(n);
         }
         return notes;

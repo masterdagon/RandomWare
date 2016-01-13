@@ -29,7 +29,7 @@ public class FragmentOne extends Fragment {
     public Uri lastUri;
     public ListNotes3 listNotes;
     public ImageView imageView;
-    private int test=0;
+    private int test = 0;
     public static Fragment f;
 
     public View rootView;
@@ -57,18 +57,18 @@ public class FragmentOne extends Fragment {
         imageView = (ImageView) rootView.findViewById(R.id.imagef1);
         inputText = (EditText) rootView.findViewById(R.id.noteMsg);
         inputTitle.setText("");
-        inputCategory = (EditText)rootView.findViewById(R.id.noteCat);
+        inputCategory = (EditText) rootView.findViewById(R.id.noteCat);
         imageView.setImageBitmap(null);
         inputText.setText("");
         return rootView;
     }
 
-    public void refreshID(){
+    public void refreshID() {
         inputTitle = (EditText) rootView.findViewById(R.id.noteTitle);
         imageView = (ImageView) rootView.findViewById(R.id.imagef1);
         inputText = (EditText) rootView.findViewById(R.id.noteMsg);
         inputTitle.setText("");
-        inputCategory = (EditText)rootView.findViewById(R.id.noteCat);
+        inputCategory = (EditText) rootView.findViewById(R.id.noteCat);
         imageView.setImageBitmap(null);
         inputText.setText("");
     }
@@ -105,34 +105,21 @@ public class FragmentOne extends Fragment {
         lastUri = uri;
     }
 
-    public void saveNote(int id) {
+    public void saveNote() {
         String str = inputText.getText().toString();
         String title = inputTitle.getText().toString();
         System.out.println(str);
         if (str.length() != 0) {
-            if(id>-1){
-                Note note1 = listNotes.getNote(id);
-                note1.setMessage(str);
-                    if (title.length() > 0) {
-                        note1.setName(title);
-                    }
+            Note note = new Note(-1);
+            note.setMessage(str);
+            if (title.length() > 0) {
+                note.setName(title);
+            }
             if (attachToPicture) {
-                note1.setPicture(lastUri.getPath());
+                note.setPicture(lastUri.getPath());
                 attachToPicture = false;
             }
-            listNotes.saveOldNote(note1);
-        }else {
-                Note note2 = new Note(0);
-                note2.setMessage(str);
-                if (title.length() > 0) {
-                    note2.setName(title);
-                }
-                if (attachToPicture) {
-                    note2.setPicture(lastUri.getPath());
-                    attachToPicture = false;
-                }
-                listNotes.saveNewNote(note2);
-            }
+            listNotes.saveNewNote(note);
             inputText.setText("");
             inputTitle.setText("");
             inputCategory.setText("");
@@ -140,8 +127,7 @@ public class FragmentOne extends Fragment {
             activity.makeToast("I exist to obey. Your note has been saved");
         } else if (str.length() == 0 && title.length() != 0) {
             activity.makeToast("I am terribly sorry for the interruption, but it seems like you forgot to write your note");
-        }
-        else if (title.length() == 0 && str.length() == 0) {
+        } else if (title.length() == 0 && str.length() == 0) {
             activity.makeToast("Hmm. Are you really sure you have something to remember?");
         }
     }

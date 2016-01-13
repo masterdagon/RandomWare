@@ -42,15 +42,14 @@ public class FileWriter3 {
     }
 
     public ArrayList<Note> loadAllFiles() {
-        ArrayList<Note> inFiles = new ArrayList<Note>();
+        ArrayList<Note> inFiles = new ArrayList<>();
         File[] files = filedir.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
+        for (File f : files) {
+            if (f.isDirectory()) {
                 //inFiles.addAll(getAllFiles(file));
             } else {
-                if (file.getName().endsWith(".txt")) {
-                    Note note = new Note(Integer.parseInt(file.getName().substring(0, file.getName().length() - 4)));
-                    inFiles.add(note);
+                if (f.getName().endsWith(".txt")) {
+                    inFiles.add(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
                 }
             }
         }

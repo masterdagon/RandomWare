@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             makeToast("No note selected");
         } else {
             Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
-            note = listNotes.loadNote(note);
+            System.out.println("this id edit "+note.getId());
             int index = ((FragmentTwo) viewAdapter.f2).lastListItemSelected;
             Intent intentEdit = new Intent(this, ActivityDetails.class);
             intentEdit.putExtra("selectedNote", note);
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void saveNote(View view) {
-        ((FragmentOne) viewAdapter.f1).saveNote(-1);
+        ((FragmentOne) viewAdapter.f1).saveNote();
         ((FragmentTwo) viewAdapter.f2).initList();
     }
 
