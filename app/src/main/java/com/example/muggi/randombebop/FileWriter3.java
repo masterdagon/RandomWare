@@ -21,6 +21,7 @@ public class FileWriter3 {
 
     File filedir;
     File filedir2;
+    int newID=0;
 
     public FileWriter3() {
         try {
@@ -39,6 +40,7 @@ public class FileWriter3 {
         } catch (Exception e) {
 
         }
+        newID=loadId();
     }
 
     public ArrayList<Note> loadAllFiles() {
@@ -49,7 +51,17 @@ public class FileWriter3 {
                 //inFiles.addAll(getAllFiles(file));
             } else {
                 if (f.getName().endsWith(".txt")) {
-                    inFiles.add(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
+                    if(f.getName().substring(0,1).equals("#")){
+                        Note note = loadNote(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
+                        if(deleteNote(note)){
+                            note.setId(newID);
+                            saveNote(note,true);
+                            newID++;
+                            saveId(newID);
+                        }
+                    }else{
+                        inFiles.add(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
+                    }
                 }
             }
         }
@@ -96,8 +108,7 @@ public class FileWriter3 {
         return note;
     }
 
-    public boolean saveNote(Note note, boolean newNote) {
-        boolean succes = false;
+    public Note saveNote(Note note, boolean newNote) {
         String content = "";
         FileOutputStream fop = null;
         File file;
@@ -110,9 +121,13 @@ public class FileWriter3 {
             if (newNote) {
                 if (!file.exists()) {
                     file.createNewFile();
-                } else {
-                    succes = false;
+                    note.setId(newID);
+                    newID++;
+                    saveId(newID);
+                }else{
+                  note = null;
                 }
+
             } else {
                 file.createNewFile();
             }
@@ -137,7 +152,6 @@ public class FileWriter3 {
             fop.close();
 
             System.out.println("Done");
-            succes = true;
         } catch (Exception e) {
 
         } finally {
@@ -145,10 +159,10 @@ public class FileWriter3 {
                 if (fop != null) {
                     fop.close();
                 }
-                return succes;
+                return note;
             } catch (IOException e) {
                 e.printStackTrace();
-                return succes;
+                return note;
             }
         }
     }
