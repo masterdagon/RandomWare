@@ -74,4 +74,22 @@ public class ListNotes3 {
         fw.deleteNote(notes.get(position));
     }
 
+    public boolean updateNote(Note note) {
+
+        int index = 0;
+        boolean found = false;
+        for (int i = 0; i < notes.size(); i++) {
+            Note n = notes.get(i);
+            if (n.getId() == note.getId()) {
+                index = i;
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            notes.remove(index);
+            notes.add(index, note);
+        }
+        return found;
+    }
 }
