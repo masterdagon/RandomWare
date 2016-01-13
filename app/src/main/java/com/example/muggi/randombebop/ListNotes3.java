@@ -14,6 +14,7 @@ public class ListNotes3 {
 
     public ListNotes3() {
         categories=fw.loadCategories();
+        fw.saveCategories(categories);
     }
 
     public Note getNote(int id) {
