@@ -11,11 +11,9 @@ public class ListNotes3 {
     public ArrayList<Note> notes = new ArrayList();
     public ArrayList<Category> categories = new ArrayList();
     public FileWriter3 fw = new FileWriter3();
-    public int newID = 0;
 
     public ListNotes3() {
         categories=fw.loadCategories();
-        newID=fw.loadId();
     }
 
     public Note getNote(int id) {
@@ -33,11 +31,8 @@ public class ListNotes3 {
 
 
     public void saveNewNote(Note note) {
-        note.setId(newID);
-        newID++;
-        fw.saveId(newID);
-        this.notes.add(note);
-        fw.saveNote(note, true);
+        Note note1 = fw.saveNote(note, true);
+        this.notes.add(note1);
     }
 
     public void saveOldNote(Note note) {
