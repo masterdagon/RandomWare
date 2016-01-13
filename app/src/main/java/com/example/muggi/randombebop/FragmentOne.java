@@ -109,8 +109,9 @@ public class FragmentOne extends Fragment {
         String str = inputText.getText().toString();
         String title = inputTitle.getText().toString();
         if (str.length() != 0) {
-        if(id>0){
+        if(id>-1){
             Note note1 = listNotes.getNote(id);
+            note1.setMessage(str);
             if (title.length() > 0) {
                 note1.setName(title);
             }
@@ -120,7 +121,8 @@ public class FragmentOne extends Fragment {
             }
             listNotes.saveOldNote(note1);
         }else {
-                Note note2 = new Note(str, 0);
+                Note note2 = new Note(0);
+                note2.setMessage(str);
                 if (title.length() > 0) {
                     note2.setName(title);
                 }

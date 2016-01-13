@@ -126,6 +126,7 @@ public class FragmentTwo extends Fragment {
                 }
             }
         });
+        System.out.println("Size of array: " + listNotes.notes.size());
     }
 
     public void deleteNote(View view) {
