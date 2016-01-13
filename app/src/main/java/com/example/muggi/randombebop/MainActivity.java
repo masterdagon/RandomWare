@@ -148,8 +148,10 @@ public class MainActivity extends AppCompatActivity {
         String pictureURI;
         Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
         pictureURI = note.getPicture();
-
-        Intent showImageIntent = new Intent(Intent.ACTION_VIEW);
+        makeToast(pictureURI);
+        Intent showImageIntent = new Intent();
+        showImageIntent.setAction(Intent.ACTION_VIEW);
+        showImageIntent.setDataAndType(Uri.parse(pictureURI), "image/*");
         startActivity(showImageIntent);
     }
 
