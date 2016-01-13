@@ -1,11 +1,13 @@
 package com.example.muggi.randombebop;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +36,27 @@ public class FragmentOne extends Fragment {
 
     public View rootView;
 
+    public FragmentOne(){
+
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        activity = ((MainActivity)getActivity());
+
+        listNotes = activity.listNotes;
+        inputTitle = (EditText) activity.findViewById(R.id.noteTitle);
+        imageView = (ImageView) activity.findViewById(R.id.imagef1);
+        inputText = (EditText) activity.findViewById(R.id.noteMsg);
+    }
 //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
 //
@@ -86,7 +109,7 @@ public class FragmentOne extends Fragment {
         Bundle b = new Bundle();
         b.putString("msg", text);
         f.setArguments(b);
-
+        
         return f;
     }
 
