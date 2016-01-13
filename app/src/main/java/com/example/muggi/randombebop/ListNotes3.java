@@ -69,6 +69,9 @@ public class ListNotes3 {
 
     public String[] getTitles() {
         String[] astr = new String[notes.size()];
+        System.out.print("astr "+astr.length);
+        System.out.print("notes "+notes.size());
+
         for (int i = 0; i < notes.size(); i++) {
             astr[i] = (notes.get(i).getName());
         }

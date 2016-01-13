@@ -108,13 +108,14 @@ public class FragmentOne extends Fragment {
     public void saveNote(int id) {
         String str = inputText.getText().toString();
         String title = inputTitle.getText().toString();
+        System.out.println(str);
         if (str.length() != 0) {
-        if(id>-1){
-            Note note1 = listNotes.getNote(id);
-            note1.setMessage(str);
-            if (title.length() > 0) {
-                note1.setName(title);
-            }
+            if(id>-1){
+                Note note1 = listNotes.getNote(id);
+                note1.setMessage(str);
+                    if (title.length() > 0) {
+                        note1.setName(title);
+                    }
             if (attachToPicture) {
                 note1.setPicture(lastUri.getPath());
                 attachToPicture = false;

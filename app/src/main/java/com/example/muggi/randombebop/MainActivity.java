@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void saveNote(View view) {
-        ((FragmentOne) viewAdapter.f1).saveNote(0);
+        ((FragmentOne) viewAdapter.f1).saveNote(-1);
         ((FragmentTwo) viewAdapter.f2).initList();
     }
 
