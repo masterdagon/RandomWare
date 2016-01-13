@@ -46,13 +46,11 @@ public class FileWriter3 {
         ArrayList<Note> inFiles = new ArrayList<Note>();
         File[] files = filedir.listFiles();
         for (File file : files) {
-            System.out.println(file.getName());
             if (file.isDirectory()) {
                 //inFiles.addAll(getAllFiles(file));
             } else {
                 if (file.getName().endsWith(".txt")) {
-                    Note note = new Note("NotLoaded", 0);
-                    note.setName(file.getName().substring(0, file.getName().length() - 4));
+                    Note note = new Note(Integer.parseInt(file.getName().substring(0, file.getName().length() - 4)));
                     inFiles.add(note);
                 }
             }
@@ -61,7 +59,7 @@ public class FileWriter3 {
     }
 
     public Note loadNote(Note note) {
-        File file = new File(filedir, note.getName() + ".txt");
+        File file = new File(filedir, note.getId() + ".txt");
         FileInputStream fis = null;
 
         try {

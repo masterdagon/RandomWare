@@ -90,7 +90,7 @@ public class FileWriter2 {
 
                 for (String str : entries) {
                     String[] entry = str.split(",");
-                    Note note = new Note(entry[2],Integer.parseInt(entry[0]));
+                    Note note = new Note(Integer.parseInt(entry[0]));
                     note.setName(entry[1]);
                     note.setMessage(entry[2]);
                     note.setCategory(entry[3]);

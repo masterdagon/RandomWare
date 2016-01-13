@@ -11,7 +11,7 @@ public class ListNotes3 {
     public ArrayList<Note> notes = new ArrayList();
     public ArrayList<Category> categories = new ArrayList();
     public FileWriter3 fw = new FileWriter3();
-    public int newID = 1;
+    public int newID = 0;
 
     public ListNotes3() {
     }
@@ -42,8 +42,12 @@ public class ListNotes3 {
 
     }
 
-    public ArrayList<Note> loadAllNoteNames() {
+    public ArrayList<Note> loadAll() {
         notes = fw.loadAllFiles();
+        for (Note n:notes) {
+            n=fw.loadNote(n);
+
+        }
         return notes;
     }
 
