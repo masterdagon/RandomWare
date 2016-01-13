@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="This is the first fragment"
         android:textStyle="bold"/>
+
     <EditText
         android:id="@+id/noteTitle"
         android:layout_width="fill_parent"
@@ -19,6 +20,7 @@
         android:hint="*Title*"
         android:padding='12dip'
         android:layout_alignParentTop="true"/>
+
     <EditText
         android:id="@+id/noteMsg"
         android:layout_width="fill_parent"
@@ -27,29 +29,33 @@
         android:hint="*Message*"
         android:padding='12dip'
         android:layout_below="@id/noteTitle"/>
-    <EditText
-        android:id="@+id/noteCat"
-        android:layout_width="fill_parent"
+
+    <Spinner
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="*Category*"
-        android:padding='12dip'
-        android:layout_below="@id/noteMsg"/>
+        android:id="@+id/spinner2"
+        android:layout_below="@+id/noteMsg"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/buttonSave"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/noteCat"
         android:text="Save"
-        android:onClick="saveNote"/>
+        android:onClick="saveNote"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/spinner2"
+        android:layout_alignParentLeft="true" />
+
     <Button
         android:id="@+id/takePicture"
-        android:layout_below="@+id/buttonSave"
         android:text="Take picture"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:onClick="takePicture"/>
+        android:onClick="takePicture"
+        android:layout_below="@+id/buttonSave"
+        android:layout_alignParentLeft="true" />
+
     <ImageView
         android:id="@+id/imagef1"
         android:layout_below="@+id/takePicture"

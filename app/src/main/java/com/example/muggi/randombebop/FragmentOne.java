@@ -1,6 +1,5 @@
 package com.example.muggi.randombebop;
 
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,11 +10,14 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by Michael on 07/12/15.
@@ -26,14 +28,14 @@ public class FragmentOne extends Fragment {
     public static final String ARG_OBJECT = "FRAGMENT1";
     public EditText inputText;
     public EditText inputTitle;
-    public EditText inputCategory;
+    public Spinner inputCategory;
+//    public Spinner inputCategory;
     public boolean attachToPicture = false;
     public Uri lastUri;
     public ListNotes3 listNotes;
     public ImageView imageView;
-    private int test = 0;
     public static Fragment f;
-
+    public  String[] test=new String[]{"test1","test2"};
     public View rootView;
 
     public FragmentOne(){
@@ -51,12 +53,20 @@ public class FragmentOne extends Fragment {
         super.onStart();
 
         activity = ((MainActivity)getActivity());
-
         listNotes = activity.listNotes;
         inputTitle = (EditText) activity.findViewById(R.id.noteTitle);
         imageView = (ImageView) activity.findViewById(R.id.imagef1);
         inputText = (EditText) activity.findViewById(R.id.noteMsg);
+
+        String [] values = listNotes.getCategories();
+        inputCategory = (Spinner) activity.findViewById(R.id.spinner2);
+        ArrayAdapter<String> LTRadapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, values);
+        LTRadapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        inputCategory.setAdapter(LTRadapter);
+
+
     }
+
 //    @Override
 //    public void onCreate(Bundle savedInstanceState) {
 //
@@ -80,7 +90,7 @@ public class FragmentOne extends Fragment {
         imageView = (ImageView) rootView.findViewById(R.id.imagef1);
         inputText = (EditText) rootView.findViewById(R.id.noteMsg);
         inputTitle.setText("");
-        inputCategory = (EditText) rootView.findViewById(R.id.noteCat);
+        inputCategory = (Spinner) rootView.findViewById(R.id.spinner2);
         imageView.setImageBitmap(null);
         inputText.setText("");
         return rootView;
@@ -91,7 +101,7 @@ public class FragmentOne extends Fragment {
         imageView = (ImageView) rootView.findViewById(R.id.imagef1);
         inputText = (EditText) rootView.findViewById(R.id.noteMsg);
         inputTitle.setText("");
-        inputCategory = (EditText) rootView.findViewById(R.id.noteCat);
+        inputCategory = (Spinner) rootView.findViewById(R.id.spinner2);
         imageView.setImageBitmap(null);
         inputText.setText("");
     }
@@ -142,10 +152,11 @@ public class FragmentOne extends Fragment {
                 note.setPicture(lastUri.getPath());
                 attachToPicture = false;
             }
+            note.setCategory(inputCategory.getSelectedItem().toString());
             listNotes.saveNewNote(note);
             inputText.setText("");
             inputTitle.setText("");
-            inputCategory.setText("");
+           // inputCategory.setText("");
             imageView.setImageBitmap(null);
             activity.makeToast("I exist to obey. Your note has been saved");
         } else if (str.length() == 0 && title.length() != 0) {

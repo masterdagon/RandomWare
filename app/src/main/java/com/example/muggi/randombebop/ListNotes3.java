@@ -58,7 +58,7 @@ public class ListNotes3 {
         return note;
     }
 
-    public ArrayList<Category> getCategories() {
+    public ArrayList<Category>loadCategories() {
         fw.loadCategories();
         return categories;
     }
@@ -69,11 +69,20 @@ public class ListNotes3 {
 
     public String[] getTitles() {
         String[] astr = new String[notes.size()];
-        System.out.print("astr "+astr.length);
-        System.out.print("notes "+notes.size());
-
+        System.out.println("notes " + notes.size());
         for (int i = 0; i < notes.size(); i++) {
+            System.out.println(notes.get(i).toString());
+            System.out.println(notes.get(i).getId());
             astr[i] = (notes.get(i).getName());
+        }
+        return astr;
+    }
+
+    public String[] getCategories() {
+        String[] astr = new String[categories.size()];
+        System.out.println("cat size= "+categories.size());
+        for (int i = 0; i < categories.size(); i++) {
+            astr[i] = (categories.get(i).getCategory());
         }
         return astr;
     }
