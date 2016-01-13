@@ -102,6 +102,7 @@ public class FileWriter3 {
         String content = "";
         FileOutputStream fop = null;
         File file;
+        System.out.println("error"+note.toString());
         int name = note.getId();
         try {
             file = new File(filedir, name + ".txt");
