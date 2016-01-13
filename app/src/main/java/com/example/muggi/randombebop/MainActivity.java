@@ -82,17 +82,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void editButtonClick(View view) {
-        //((FragmentTwo)viewAdapter.f2).startEditView();
         if (((FragmentTwo) viewAdapter.f2).lastListItemSelected < 0) {
             makeToast("No note selected");
         } else {
             Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
-            System.out.println("this id edit "+note.getId());
-            int index = ((FragmentTwo) viewAdapter.f2).lastListItemSelected;
             Intent intentEdit = new Intent(this, ActivityDetails.class);
             intentEdit.putExtra("selectedNote", note);
-            intentEdit.putExtra("index", index);
-            makeToast("id in editButtonClick = " + note.getId() );
             startActivityForResult(intentEdit, 13372);
         }
     }
@@ -178,10 +173,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     makeToast("Exception thrown");
                     e.printStackTrace();
-                    System.out.println(note.getId());
-                    System.out.println(note.getMessage());
-                    System.out.println(note.getName());
-                    System.out.println(note.getCategory());
                 }
 
             } else if (resultCode == RESULT_CANCELED) {

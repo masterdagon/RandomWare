@@ -22,7 +22,6 @@ public class ActivityDetails extends AppCompatActivity {
     public EditText category;
     public ImageView imageView;
     public Note note;
-    public int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +45,6 @@ public class ActivityDetails extends AppCompatActivity {
         imageView = (ImageView) findViewById(R.id.detailsImageView);
         Intent intent = getIntent();
         note = intent.getParcelableExtra("selectedNote");
-        index = intent.getIntExtra("index", -1);
         title.setText(note.getName());
         message.setText(note.getMessage());
         category.setText(note.getCategory());
@@ -82,7 +80,6 @@ public class ActivityDetails extends AppCompatActivity {
             note.setCategory(category.getText().toString());
             Intent intentToReturn = new Intent(this, MainActivity.class);
             intentToReturn.putExtra("result", note);
-            intentToReturn.putExtra("index", index);
             setResult(RESULT_OK, intentToReturn);
             finish();
         }
