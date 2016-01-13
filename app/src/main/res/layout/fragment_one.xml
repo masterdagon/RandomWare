@@ -11,22 +11,44 @@
         android:layout_height="wrap_content"
         android:text="This is the first fragment"
         android:textStyle="bold"/>
+   <LinearLayout
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:id="@+id/linlay"
+       >
     <EditText
         android:id="@+id/noteTitle"
-        android:layout_width="fill_parent"
+        android:layout_weight="10"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:inputType="text"
         android:hint="*Title*"
         android:padding='12dip'
-        android:layout_alignParentTop="true"/>
+        android:layout_below="@id/fragmentTitle"/>
+       <TextView
+           android:layout_width="0dp"
+           android:layout_height="wrap_content"
+           android:layout_weight="1"/>
+    <Button
+
+        android:id="@+id/takePicture"
+        android:layout_below="@id/fragmentTitle"
+        android:layout_toRightOf="@+id/noteTitle"
+        android:background="@drawable/darkcamera"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:onClick="takePicture"/>
+   </LinearLayout>
     <EditText
         android:id="@+id/noteMsg"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:hint="*Message*"
+        android:minLines="3"
+        android:maxLines="3"
         android:padding='12dip'
-        android:layout_below="@id/noteTitle"/>
+        android:layout_below="@id/linlay"/>
     <EditText
         android:id="@+id/noteCat"
         android:layout_width="fill_parent"
@@ -38,21 +60,15 @@
 
     <Button
         android:id="@+id/buttonSave"
-        android:layout_width="fill_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_below="@id/noteCat"
         android:text="Save"
         android:onClick="saveNote"/>
-    <Button
-        android:id="@+id/takePicture"
-        android:layout_below="@+id/buttonSave"
-        android:text="Take picture"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:onClick="takePicture"/>
     <ImageView
         android:id="@+id/imagef1"
-        android:layout_below="@+id/takePicture"
+        android:layout_below="@+id/buttonSave"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
 </RelativeLayout>
