@@ -159,18 +159,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendViaBluetooth(View v) {
-//        ((FragmentTwo) viewAdapter.f2).bluetoothsend();
-        boolean selected = ((FragmentTwo) viewAdapter.f2).somthingSelected();
-        if (selected) {
-            BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-            if (btAdapter == null) {
-                Toast.makeText(this, "Bluetooth is not Supported", Toast.LENGTH_LONG).show();
-            } else {
-                enableBluetooth();
-            }
-        } else {
-            Toast.makeText(this, "You need to select a note to Send", Toast.LENGTH_LONG).show();
-        }
+        ((FragmentTwo) viewAdapter.f2).bluetoothsend();
+//        boolean selected = ((FragmentTwo) viewAdapter.f2).somthingSelected();
+//        if (selected) {
+//            BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+//            if (btAdapter == null) {
+//                Toast.makeText(this, "Bluetooth is not Supported", Toast.LENGTH_LONG).show();
+//            } else {
+//                enableBluetooth();
+//            }
+//        } else {
+//            Toast.makeText(this, "You need to select a note to Send", Toast.LENGTH_LONG).show();
+//        }
 
     }
 

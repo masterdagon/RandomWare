@@ -86,10 +86,11 @@ public class NoteZipper {
     }
 
     public void unzip(String zipFileName) {
-
+        byte data[] = new byte[BUFFER];
         try {
-            FileInputStream fin = new FileInputStream(basePath + zipFileName);
-            ZipInputStream zin = new ZipInputStream(fin);
+            File zipFile = new File(basePath,zipFileName);
+            FileInputStream fin = new FileInputStream(zipFile);
+            ZipInputStream zin = new ZipInputStream(new BufferedInputStream(fin, BUFFER));
 
             ZipEntry ze = null;
             while ((ze = zin.getNextEntry()) != null) {
@@ -104,15 +105,22 @@ public class NoteZipper {
                     fout.close();
                 } else if (ze.getName().equals(ZIP_PICTURE)) {
 
-                    fout = new FileOutputStream(basePath + "NotePictures/" + ze.getName());
-                    for (int c = zin.read(); c != -1; c = zin.read()){
-                        fout.write(c);
+                    File img = new File(basePath + "NotePictures/" + ze.getName());
+                    fout = new FileOutputStream(img);
+                    BufferedOutputStream dest = new BufferedOutputStream(fout, BUFFER);
+
+                    int picCount;
+                    while ((picCount = zin.read(data, 0, BUFFER)) != -1) {
+                        dest.write(data, 0, picCount);
                     }
+
                     zin.closeEntry();
+                    dest.close();
                     fout.close();
                 }
             }
             zin.close();
+            fin.close();
 
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
