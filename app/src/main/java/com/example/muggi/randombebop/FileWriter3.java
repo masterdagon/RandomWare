@@ -21,7 +21,7 @@ public class FileWriter3 {
 
     File filedir;
     File filedir2;
-    int newID=0;
+    int newID = 0;
 
     public FileWriter3() {
         try {
@@ -40,7 +40,7 @@ public class FileWriter3 {
         } catch (Exception e) {
 
         }
-        newID=loadId();
+        newID = loadId();
     }
 
     public ArrayList<Note> loadAllFiles() {
@@ -51,15 +51,15 @@ public class FileWriter3 {
                 //inFiles.addAll(getAllFiles(file));
             } else {
                 if (f.getName().endsWith(".txt")) {
-                    if(f.getName().substring(0,1).equals("#")){
+                    if (f.getName().substring(0, 1).equals("#")) {
                         Note note = loadNote(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
-                        if(deleteNote(note)){
+                        if (deleteNote(note)) {
                             note.setId(newID);
-                            saveNote(note,true);
+                            saveNote(note, true);
                             newID++;
                             saveId(newID);
                         }
-                    }else{
+                    } else {
                         inFiles.add(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
                     }
                 }
@@ -112,25 +112,20 @@ public class FileWriter3 {
         String content = "";
         FileOutputStream fop = null;
         File file;
-        System.out.println("error"+note.toString());
+        System.out.println("error" + note.toString());
+        if (newNote) {
+            note.setId(newID);
+            newID++;
+            saveId(newID);
+        }
         int name = note.getId();
         try {
             file = new File(filedir, name + ".txt");
             fop = new FileOutputStream(file);
             // if file doesnt exists, then create it
-            if (newNote) {
-                if (!file.exists()) {
-                    file.createNewFile();
-                    note.setId(newID);
-                    newID++;
-                    saveId(newID);
-                }else{
-                  note = null;
-                }
 
-            } else {
-                file.createNewFile();
-            }
+            file.createNewFile();
+
 
             StringBuilder sb = new StringBuilder();
             sb.append(note.getId());
@@ -142,7 +137,7 @@ public class FileWriter3 {
             sb.append(note.getCategory());
             sb.append(",");
             sb.append(note.getPicture());
-            content=sb.toString();
+            content = sb.toString();
 
             // get the content in bytes
             byte[] contentInBytes = content.getBytes();
@@ -168,7 +163,7 @@ public class FileWriter3 {
     }
 
     public boolean deleteNote(Note note) {
-        File file = new File(filedir.getPath()+"/"+note.getId()+".txt");
+        File file = new File(filedir.getPath() + "/" + note.getId() + ".txt");
         boolean deleted = file.delete();
         return deleted;
     }
@@ -185,16 +180,16 @@ public class FileWriter3 {
             file.createNewFile();
 
             StringBuilder sb = new StringBuilder();
-            for(int i=0;i<cat.size();i++)
-                if(cat.size()-1!=i){
+            for (int i = 0; i < cat.size(); i++)
+                if (cat.size() - 1 != i) {
                     sb.append(cat.get(i).getCategory());
-                    sb.append("");
-                }else{
+                    sb.append(",");
+                } else {
                     sb.append(cat.get(i).getCategory());
                 }
 
 
-            content=sb.toString();
+            content = sb.toString();
 
             // get the content in bytes
             byte[] contentInBytes = content.getBytes();
@@ -218,19 +213,21 @@ public class FileWriter3 {
                 return succes;
             }
         }
-    };
+    }
+
+    ;
 
     public ArrayList<Category> loadCategories() {
         ArrayList<Category> cat = new ArrayList<Category>();
         File file = new File(filedir2, "categories.txt");
         FileInputStream fis = null;
-        if(!file.exists()){
-            String[] temp = new String[]{"No Category","Sports","Hobby","School","Work","Fun"};
-            for (String s:temp) {
+        if (!file.exists()) {
+            String[] temp = {"No Category", "Sports", "Hobby", "School", "Work", "Fun"};
+            for (String s : temp) {
                 cat.add(new Category(s));
             }
             return cat;
-        }else {
+        } else {
             try {
                 fis = new FileInputStream(file);
 
@@ -268,12 +265,12 @@ public class FileWriter3 {
     }
 
     public int loadId() {
-        int id =0;
+        int id = 0;
         File file = new File(filedir2, "id.txt");
         FileInputStream fis = null;
-        if(!file.exists()){
+        if (!file.exists()) {
             return id;
-        }else {
+        } else {
             try {
                 fis = new FileInputStream(file);
                 int content;
@@ -283,7 +280,7 @@ public class FileWriter3 {
                     data = data + (char) content;
                     //Log.i("MESSAGE LOADED: ", data);
                 }
-                id=Integer.parseInt(data.toString());
+                id = Integer.parseInt(data.toString());
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -308,7 +305,7 @@ public class FileWriter3 {
             file = new File(filedir2, "id.txt");
             fop = new FileOutputStream(file);
             file.createNewFile();
-            content=""+id;
+            content = "" + id;
             // get the content in bytes
             byte[] contentInBytes = content.getBytes();
             fop.write(contentInBytes);
@@ -328,5 +325,7 @@ public class FileWriter3 {
                 return succes;
             }
         }
-    };
+    }
+
+    ;
 }

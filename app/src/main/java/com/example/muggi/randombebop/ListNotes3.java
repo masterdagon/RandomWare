@@ -13,7 +13,7 @@ public class ListNotes3 {
     public FileWriter3 fw = new FileWriter3();
 
     public ListNotes3() {
-        categories=fw.loadCategories();
+        categories = fw.loadCategories();
         fw.saveCategories(categories);
     }
 
@@ -24,6 +24,11 @@ public class ListNotes3 {
             }
         }
         return null;
+    }
+
+    public Note getNoteByListPlacement(int index) {
+
+        return notes.get(index);
     }
 
     public Note loadFromPosition(int position) {
@@ -44,10 +49,10 @@ public class ListNotes3 {
     public ArrayList<Note> loadAll() {
         System.out.println("i ran this");
         ArrayList<Note> temp = fw.loadAllFiles();
-      //  System.out.println("i ran this to "+temp.get(1).getId());
+        //  System.out.println("i ran this to "+temp.get(1).getId());
         notes.addAll(temp);
-        for (Note n: notes) {
-            System.out.print("test id"+ n.getId());
+        for (Note n : notes) {
+            System.out.print("test id" + n.getId());
             n = fw.loadNote(n);
         }
         return notes;
@@ -58,7 +63,7 @@ public class ListNotes3 {
         return note;
     }
 
-    public ArrayList<Category> getCategories() {
+    public ArrayList<Category> loadCategories() {
         fw.loadCategories();
         return categories;
     }
@@ -69,18 +74,27 @@ public class ListNotes3 {
 
     public String[] getTitles() {
         String[] astr = new String[notes.size()];
-        System.out.print("astr "+astr.length);
-        System.out.print("notes "+notes.size());
-
+        System.out.println("notes " + notes.size());
         for (int i = 0; i < notes.size(); i++) {
+            System.out.println(notes.get(i).toString());
+            System.out.println(notes.get(i).getId());
             astr[i] = (notes.get(i).getName());
         }
         return astr;
     }
 
+    public String[] getCategories() {
+        String[] astr = new String[categories.size()];
+        System.out.println("cat size= " + categories.size());
+        for (int i = 0; i < categories.size(); i++) {
+            astr[i] = (categories.get(i).getCategory());
+        }
+        return astr;
+    }
+
     public boolean deleteNote(int position) {
-        boolean deleted= fw.deleteNote(notes.get(position));
-        if(deleted){
+        boolean deleted = fw.deleteNote(notes.get(position));
+        if (deleted) {
             notes.remove(position);
         }
         return deleted;

@@ -53,7 +53,7 @@ public class FragmentTwo extends Fragment {
 
         Bundle args = getArguments();
         TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
-        //tw.setText(args.getString("msg"));
+        tw.setText(args.getString(""));
         notelist = (ListView) rootView.findViewById(R.id.list);
         showText = (TextView) rootView.findViewById(R.id.responseText);
         imageView = (ImageView) rootView.findViewById(R.id.imagef2);
@@ -101,8 +101,8 @@ public class FragmentTwo extends Fragment {
         notelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                lastListItemSelected=position;
-                System.out.println("this is Posistion "+ position);
+                lastListItemSelected = position;
+                System.out.println("this is Posistion " + position);
                 Note node = listNotes.loadFromPosition(position);
                 String str = node.getMessage();
                 String path = node.getPicture();
@@ -128,7 +128,11 @@ public class FragmentTwo extends Fragment {
         });
         System.out.println("Size of array: " + listNotes.notes.size());
     }
-
+    public void runThisWhenReturningFromEditView(){
+        Note node = listNotes.loadFromPosition(lastListItemSelected);
+        String str = node.getMessage();
+        showText.setText(str);
+    }
     public void deleteNote(View view) {
         if (lastListItemSelected != -1) {
             boolean deleted = listNotes.deleteNote(lastListItemSelected);

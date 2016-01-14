@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         if (((FragmentTwo) viewAdapter.f2).lastListItemSelected < 0) {
             makeToast("No note selected");
         } else {
-            Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+            Note note = listNotes.getNoteByListPlacement(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
             Intent intentEdit = new Intent(this, ActivityDetails.class);
             intentEdit.putExtra("selectedNote", note);
             startActivityForResult(intentEdit, 13372);
@@ -158,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     listNotes.updateNote(note);
                     ((FragmentTwo) viewAdapter.f2).initList();
+                    ((FragmentTwo) viewAdapter.f2).runThisWhenReturningFromEditView();
                     makeToast("Note edited and saved... hopefully");
                 } catch (Exception e) {
                     makeToast("Exception thrown");

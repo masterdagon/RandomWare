@@ -68,21 +68,24 @@
         android:id="@+id/f2rellay3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/f2rellay2">
+        android:layout_below="@+id/f2rellay2"
+        android:layout_centerHorizontal="true">
 
         <TextView
             android:id="@+id/responseText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:text="@string/response" />
 
         <ImageView
             android:id="@+id/imagef2"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_below="@+id/responseText"
-            android:onClick="showPictureInGallery" />
+            android:onClick="showPictureInGallery"
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 
 
