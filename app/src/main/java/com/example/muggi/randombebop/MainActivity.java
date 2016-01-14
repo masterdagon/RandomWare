@@ -214,9 +214,9 @@ public class MainActivity extends AppCompatActivity {
                 makeToast("Something went wrong");
             }
         }
-        if(resultCode == DISCOVER_DURATION && reqCode == REQUEST_BLU){
+        if(resultCode == DISCOVER_DURATION && reqCode == REQUEST_BLU) {
             String[] paths = ((FragmentTwo) viewAdapter.f2).bluetoothsend();
-            for(int i=0;i<paths.length;i=i+2) {
+            for (int i = 0; i < paths.length; i = i + 2) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_SEND);
                 intent.setType(paths[i]);
@@ -248,9 +248,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }
-        }else{
-            Toast.makeText(this,"Bluetooth is Cancelled",Toast.LENGTH_LONG).show();
-            }
+        }
 
     }
 }
