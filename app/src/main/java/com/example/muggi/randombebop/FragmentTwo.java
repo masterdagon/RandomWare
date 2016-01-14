@@ -1,9 +1,11 @@
 package com.example.muggi.randombebop;
 
 
+import android.bluetooth.BluetoothAdapter;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -28,6 +30,7 @@ import android.widget.Toast;
 import com.example.muggi.randombebop.R;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * Created by Michael on 07/12/15.
@@ -39,10 +42,11 @@ public class FragmentTwo extends Fragment {
     public ListNotes3 listNotes;
     public ListView notelist;
     public int lastListItemSelected = -1;
-
     public static final String ARG_OBJECT = "FRAGMENT2";
     public static MainActivity activity;
     public ImageView imageView;
+
+    PackageManager pm = activity.getPackageManager();
 
     public View rootView;
 
@@ -91,6 +95,35 @@ public class FragmentTwo extends Fragment {
         return f;
     }
 
+    public void bluetoothsend(){
+        Note note;
+        if (lastListItemSelected != -1) {
+
+        }else {
+            note = listNotes.getNotePosition(lastListItemSelected);
+            lastListItemSelected = -1;
+            showText.setText("");
+
+            BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
+            if (btAdapter == null) {
+                //this dosent work no bluetooth
+            } else {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_STREAM, note.getPicture());
+                //...
+                startActivity(intent);
+
+
+//            List appsList = pm.queryIntentActivities( intent, 0);
+//            if(appsList.size() > 0) {
+//                // proceed
+//            }
+            }
+        }
+    }
+
     public void initList() {
         if (listNotes.getSize() > 0) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
@@ -101,9 +134,9 @@ public class FragmentTwo extends Fragment {
         notelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                lastListItemSelected = position;
-                System.out.println("this is Posistion " + position);
-                Note node = listNotes.loadFromPosition(position);
+                lastListItemSelected=position;
+                System.out.println("this is Posistion "+ position);
+                Note node = listNotes.getNotePosition(position);
                 String str = node.getMessage();
                 String path = node.getPicture();
                 showText.setText(str);

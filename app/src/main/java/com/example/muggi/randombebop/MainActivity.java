@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void share(View view) {
+        ((FragmentTwo) viewAdapter.f2).bluetoothsend();
+    }
 
     public void saveNote(View view) {
         ((FragmentOne) viewAdapter.f1).saveNote();

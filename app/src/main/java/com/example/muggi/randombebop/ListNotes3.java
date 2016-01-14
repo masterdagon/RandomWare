@@ -30,9 +30,10 @@ public class ListNotes3 {
 
         return notes.get(index);
     }
+    
+    public Note getNotePosition(int position) {
 
-    public Note loadFromPosition(int position) {
-        return loadNote(notes.get(position));
+        return notes.get(position);
     }
 
 
