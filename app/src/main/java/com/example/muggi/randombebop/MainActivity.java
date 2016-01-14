@@ -134,14 +134,27 @@ public class MainActivity extends AppCompatActivity {
 
     public void showPictureInGallery(View view) {
         // get picture URI
+
+        String pictureURI;
+        Note note = listNotes.getNoteByListPlacement(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+        pictureURI = note.getPicture();
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        File image = new File(pictureURI);
+        intent.setDataAndType(Uri.fromFile(image),"image/*");
+
+        startActivity(intent);
+        /*
         String pictureURI;
         Note note = listNotes.getNoteByListPlacement(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
         pictureURI = note.getPicture();
         makeToast(pictureURI);
         Intent showImageIntent = new Intent();
         showImageIntent.setAction(Intent.ACTION_VIEW);
-        showImageIntent.setDataAndType(Uri.parse(pictureURI), "image/*");
+        showImageIntent.setDataAndType(Uri.parse(pictureURI), "image/jpeg");
         startActivity(showImageIntent);
+        */
     }
 
     public void sendViaBluetooth(View v) {

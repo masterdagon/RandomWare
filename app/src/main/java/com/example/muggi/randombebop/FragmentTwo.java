@@ -121,11 +121,11 @@ public class FragmentTwo extends Fragment {
         }
     }
 
-    public boolean deletebluetoothfile(){
-        return listNotes.deleteNote(listNotes.getSize()-1,true);
+    public boolean deletebluetoothfile() {
+        return listNotes.deleteNote(listNotes.getSize() - 1, true);
     }
 
-    public boolean somthingSelected(){
+    public boolean somthingSelected() {
         if (lastListItemSelected == -1) {
             return false;
         } else {
@@ -144,12 +144,10 @@ public class FragmentTwo extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 lastListItemSelected = position;
-                System.out.println("this is Posistion " + position);
                 Note node = listNotes.getNotePosition(position);
                 String str = node.getMessage();
                 String path = node.getPicture();
                 showText.setText(str);
-                activity.makeToast("Position: " + position);
 
                 if (!path.equals("NOTSET")) {
                     File imgFile = new File(path);
@@ -170,7 +168,7 @@ public class FragmentTwo extends Fragment {
         });
         System.out.println("Size of array: " + listNotes.notes.size());
     }
-    
+
     public void runThisWhenReturningFromEditView() {
         Note node = listNotes.getNoteByListPlacement(lastListItemSelected);
         String str = node.getMessage();
@@ -179,14 +177,14 @@ public class FragmentTwo extends Fragment {
 
     public void deleteNote(View view) {
         if (lastListItemSelected != -1) {
-            boolean deleted = listNotes.deleteNote(lastListItemSelected,false);
+            boolean deleted = listNotes.deleteNote(lastListItemSelected, false);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
             notelist.setAdapter(adapter);
             lastListItemSelected = -1;
             showText.setText("");
             if (deleted) {
                 activity.makeToast("Madam/Sir, your note has been deleted!");
-            }else{
+            } else {
                 activity.makeToast("Madam/Sir, Somthing went wrong!");
             }
         } else {

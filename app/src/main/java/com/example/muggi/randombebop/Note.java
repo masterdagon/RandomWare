@@ -57,6 +57,12 @@ public class Note implements Parcelable{
         this.category = category;
     }
 
+    public boolean hasPicture(){
+        if(picture.equals("NOTSET")){
+            return false;
+        }else{return true;}
+    }
+
     @Override
     public int describeContents() {
         return 0;
