@@ -99,26 +99,8 @@ public class FragmentTwo extends Fragment {
     public String bluetoothsend() {
         Note note = listNotes.getNotePosition(lastListItemSelected);
         lastListItemSelected = -1;
-        Note note1 = new Note(-1);
-        note1.setId(note.getId());
-        note1.setMessage(note.getMessage());
-        note1.setCategory(note.getCategory());
-        note1.setName(note.getName());
-        note1.setPicture(note.getPicture());
-        listNotes.saveOldNote(note1, true);
-        String textPath = "#RandomBebop" + note1.getId() + ".txt";
-        String text = "text/plain";
-        if (note1.getPicture().equals("NOTSET")) {
-            String[] paths = new String[]{text, textPath};
-            return text;
-
-        } else {
-            String[] temp = note1.getPicture().split("/");
-            String imagePath = "NotePictures/" + temp[temp.length - 1];
-            String img = "image/jpg";
-            String[] paths = new String[]{text, textPath, img, imagePath};
-            return text;
-        }
+        listNotes.fw.zipFiles(note);
+        return "#" + note.getId() + ".zip";
     }
 
     public boolean deletebluetoothfile() {
