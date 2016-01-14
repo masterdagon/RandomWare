@@ -2,20 +2,32 @@ package com.example.muggi.randombebop;
 
 
 import android.bluetooth.BluetoothAdapter;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.muggi.randombebop.R;
 
 import java.io.File;
 import java.util.List;
@@ -45,7 +57,7 @@ public class FragmentTwo extends Fragment {
 
         Bundle args = getArguments();
         TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
-        //tw.setText(args.getString("msg"));
+        tw.setText(args.getString(""));
         notelist = (ListView) rootView.findViewById(R.id.list);
         showText = (TextView) rootView.findViewById(R.id.responseText);
         imageView = (ImageView) rootView.findViewById(R.id.imagef2);
@@ -149,7 +161,11 @@ public class FragmentTwo extends Fragment {
         });
         System.out.println("Size of array: " + listNotes.notes.size());
     }
-
+    public void runThisWhenReturningFromEditView(){
+        Note node = listNotes.loadFromPosition(lastListItemSelected);
+        String str = node.getMessage();
+        showText.setText(str);
+    }
     public void deleteNote(View view) {
         if (lastListItemSelected != -1) {
             boolean deleted = listNotes.deleteNote(lastListItemSelected);

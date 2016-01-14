@@ -54,6 +54,7 @@ public class FragmentOne extends Fragment {
 
         activity = ((MainActivity)getActivity());
         listNotes = activity.listNotes;
+        ((TextView) activity.findViewById(R.id.fragmentTitle)).setText("");
         inputTitle = (EditText) activity.findViewById(R.id.noteTitle);
         imageView = (ImageView) activity.findViewById(R.id.imagef1);
         inputText = (EditText) activity.findViewById(R.id.noteMsg);
