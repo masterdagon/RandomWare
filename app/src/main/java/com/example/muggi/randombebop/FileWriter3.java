@@ -19,10 +19,20 @@ import java.util.List;
  */
 public class FileWriter3 {
 
+    private NoteZipper nz = new NoteZipper();
     private File filedir;
     private File filedir2;
+    private File filedir3;
     private int newID = 0;
     private int newPId=0;
+
+    public boolean zipFiles(Note note){
+        return nz.zip(note,"#"+note.getId()+".zip");
+    }
+
+    public void unzipFiles(String fileName){
+        nz.unzip(fileName);
+    }
 
     public int getNewPId(){
         return newPId;
@@ -49,6 +59,14 @@ public class FileWriter3 {
         } catch (Exception e) {
 
         }
+        try {
+            filedir3 = new File(Environment.getExternalStorageDirectory(), "Notes/NotePicture");
+            if (!filedir2.exists()) {
+                filedir2.mkdirs();
+            }
+        } catch (Exception e) {
+
+        }
         newID = loadId(true);
     }
 
@@ -57,23 +75,35 @@ public class FileWriter3 {
         File[] files = filedir.listFiles();
         for (File f :files) {
             if(f.getName().endsWith(".zip")){
-                // run unZip
+                System.out.println("ZIP FILE REGISTRET");
+                unzipFiles(f.getName());
+                f.delete();
             }
         }
         for (File f :files) {
             if (f.isDirectory()) {
 
-            }else if (f.getName().length() > 13) {
-                if (f.getName().substring(0, 11).equals("#RandomBebop")) {
-                    Note note = loadNote(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
-                    if (deleteNote(note, false)) {
-                        saveNote(note, true,false);
-                        if(!note.getPicture().equals("NOTSET")){
-
+            }else if (f.getName().startsWith("#note")) {
+                System.out.println("See note has an #");
+                f.renameTo(new File(filedir,newID+".txt"));
+                Note note = loadNote(new Note(newID));
+                saveId(newID,true);
+                    if(!note.getPicture().equals("NOTSET")){
+                        File[] fileP = filedir3.listFiles();
+                        for (File fp :fileP) {
+                            if(fp.getName().startsWith("#picture")){
+                                String imgPath;
+                                imgPath = "image_"+newPId+".jpg";
+                                newPId++;
+                                saveId(newPId, false);
+                                fp.renameTo(new File(filedir3,imgPath));
+                                note.setPicture(Environment.getExternalStorageDirectory().getPath()+"/Notes/NotePictures/"+imgPath);
+                            }
                         }
-                        inFiles.add(note);
                     }
-                }
+                    saveNote(note, true,false);
+                    inFiles.add(note);
+
             }else{
                 if (f.getName().endsWith(".txt")) {
                     inFiles.add(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
@@ -185,7 +215,7 @@ public class FileWriter3 {
     public boolean deleteNote(Note note,boolean blue) {
         File file;
         if(blue){
-            file = new File(filedir.getPath() + "/#RandomBebop" + note.getId() + ".txt");
+            file = new File(filedir.getPath() + "/#note" + note.getId() + ".txt");
         }else{
             file = new File(filedir.getPath() + "/" + note.getId() + ".txt");
         }

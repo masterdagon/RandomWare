@@ -20,8 +20,8 @@ public class NoteZipper {
 
     private final String basePath = Environment.getExternalStorageDirectory().getPath() + "/Notes/";
     private final int BUFFER = 2048;
-    private final String ZIP_NOTE = "#note";
-    private final String ZIP_PICTURE = "#picture";
+    private final String ZIP_NOTE = "#note.txt";
+    private final String ZIP_PICTURE = "#picture.jpg";
 
     public Boolean zip(Note note, String zipFileName) {
 
@@ -31,7 +31,8 @@ public class NoteZipper {
 
         try {
             BufferedInputStream origin = null;
-            FileOutputStream dest = new FileOutputStream(zipFileName);
+            File zipFile = new File(basePath,zipFileName);
+            FileOutputStream dest = new FileOutputStream(zipFile);
             ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
 
             byte data[] = new byte[BUFFER];
