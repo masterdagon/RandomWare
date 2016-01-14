@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     public void showPictureInGallery(View view) {
         // get picture URI
         String pictureURI;
-        Note note = listNotes.getNote(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+        Note note = listNotes.getNoteByListPlacement(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
         pictureURI = note.getPicture();
         makeToast(pictureURI);
         Intent showImageIntent = new Intent();
