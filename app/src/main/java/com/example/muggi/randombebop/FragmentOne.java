@@ -93,30 +93,31 @@ public class FragmentOne extends Fragment {
         inputCategory = (Spinner) rootView.findViewById(R.id.spinner2);
         imageView.setImageBitmap(null);
         inputText.setText("");
+/**
+ //THIS CODE WAS SUPPOSED TO REMEMBER SELECTION ON SPINNER; BUT FOR SOME REASON THE FRAGMENT STILL COUNTS
+ //AS ACTIVE WHEN SWITCHING TO ANOTHER FRAGMENT, AND THE SELECTION IS SET TO ZERO
 
-        //THIS CODE WAS SUPPOSED TO REMEMBER SELECTION ON SPINNER; BUT FOR SOME REASON THE FRAGMENT STILL COUNTS
-        //AS ACTIVE WHEN SWITCHING TO ANOTHER FRAGMENT, AND THE SELECTION IS SET TO ZERO
-//        inputCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> arg0, View arg1,
-//                                       int arg2, long arg3) {
-////                activity.makeToast("" + inputCategory.getSelectedItemPosition());
-//                if (inputCategory.getSelectedItemPosition() > 0) {
-//                    lastSpinnerSelection = inputCategory.getSelectedItemPosition();
-//                } else if (inputCategory.getSelectedItemPosition() == 0) {
-//                    if (isVisible()) {
-//                        lastSpinnerSelection = 0;
-//                        activity.makeToast("Last selection set to zero");
-//                    }
-//                }
-//                inputCategory.setSelection(lastSpinnerSelection);
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> arg0) {
-//            }
-//        });
+         inputCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+             @Override
+             public void onItemSelected(AdapterView<?> arg0, View arg1,
+                                        int arg2, long arg3) {
+//                 activity.makeToast("" + inputCategory.getSelectedItemPosition());
+                 if (inputCategory.getSelectedItemPosition() > 0) {
+                     lastSpinnerSelection = inputCategory.getSelectedItemPosition();
+                 } else if (inputCategory.getSelectedItemPosition() == 0) {
+                     if (isVisible()) {
+                         lastSpinnerSelection = 0;
+                         activity.makeToast("Last selection set to zero");
+                     }
+                 }
+                 inputCategory.setSelection(lastSpinnerSelection);
+             }
 
+             @Override
+             public void onNothingSelected(AdapterView<?> arg0) {
+             }
+         });
+ */
         return rootView;
     }
 
@@ -170,7 +171,7 @@ public class FragmentOne extends Fragment {
             listNotes.saveNewNote(note);
             inputText.setText("");
             inputTitle.setText("");
-            // inputCategory.setText("");
+            inputCategory.setSelection(0);
             imageView.setImageBitmap(null);
             activity.makeToast("I exist to obey. Your note has been saved");
         } else if (str.length() == 0 && title.length() != 0) {
