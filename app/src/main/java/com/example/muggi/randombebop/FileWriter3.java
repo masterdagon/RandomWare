@@ -60,9 +60,9 @@ public class FileWriter3 {
 
         }
         try {
-            filedir3 = new File(Environment.getExternalStorageDirectory(), "Notes/NotePicture");
-            if (!filedir2.exists()) {
-                filedir2.mkdirs();
+            filedir3 = new File(Environment.getExternalStorageDirectory(), "Notes/NotePictures");
+            if (!filedir3.exists()) {
+                filedir3.mkdirs();
             }
         } catch (Exception e) {
 
@@ -80,6 +80,8 @@ public class FileWriter3 {
                 f.delete();
             }
         }
+        files = filedir.listFiles();
+        System.out.println("ZIP FILE REGISTRET");
         for (File f :files) {
             if (f.isDirectory()) {
 
