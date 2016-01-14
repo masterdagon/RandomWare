@@ -10,6 +10,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,43 +30,41 @@ public class FragmentOne extends Fragment {
     public EditText inputText;
     public EditText inputTitle;
     public Spinner inputCategory;
-//    public Spinner inputCategory;
     public boolean attachToPicture = false;
     public Uri lastUri;
     public ListNotes3 listNotes;
     public ImageView imageView;
     public static Fragment f;
-    public  String[] test=new String[]{"test1","test2"};
+    public String[] test = new String[]{"test1", "test2"};
     public View rootView;
+    private int lastSpinnerSelection = -1;
 
-    public FragmentOne(){
+    public FragmentOne() {
 
     }
 
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
 
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
-        activity = ((MainActivity)getActivity());
+        activity = ((MainActivity) getActivity());
         listNotes = activity.listNotes;
         ((TextView) activity.findViewById(R.id.fragmentTitle)).setText("");
         inputTitle = (EditText) activity.findViewById(R.id.noteTitle);
         imageView = (ImageView) activity.findViewById(R.id.imagef1);
         inputText = (EditText) activity.findViewById(R.id.noteMsg);
 
-        String [] values = listNotes.getCategories();
+        String[] values = listNotes.getCategories();
         inputCategory = (Spinner) activity.findViewById(R.id.spinner2);
         ArrayAdapter<String> LTRadapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item, values);
         LTRadapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         inputCategory.setAdapter(LTRadapter);
-
-
     }
 
 //    @Override
@@ -94,17 +93,31 @@ public class FragmentOne extends Fragment {
         inputCategory = (Spinner) rootView.findViewById(R.id.spinner2);
         imageView.setImageBitmap(null);
         inputText.setText("");
-        return rootView;
-    }
 
-    public void refreshID() {
-        inputTitle = (EditText) rootView.findViewById(R.id.noteTitle);
-        imageView = (ImageView) rootView.findViewById(R.id.imagef1);
-        inputText = (EditText) rootView.findViewById(R.id.noteMsg);
-        inputTitle.setText("");
-        inputCategory = (Spinner) rootView.findViewById(R.id.spinner2);
-        imageView.setImageBitmap(null);
-        inputText.setText("");
+        //THIS CODE WAS SUPPOSED TO REMEMBER SELECTION ON SPINNER; BUT FOR SOME REASON THE FRAGMENT STILL COUNTS
+        //AS ACTIVE WHEN SWITCHING TO ANOTHER FRAGMENT, AND THE SELECTION IS SET TO ZERO
+//        inputCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> arg0, View arg1,
+//                                       int arg2, long arg3) {
+////                activity.makeToast("" + inputCategory.getSelectedItemPosition());
+//                if (inputCategory.getSelectedItemPosition() > 0) {
+//                    lastSpinnerSelection = inputCategory.getSelectedItemPosition();
+//                } else if (inputCategory.getSelectedItemPosition() == 0) {
+//                    if (isVisible()) {
+//                        lastSpinnerSelection = 0;
+//                        activity.makeToast("Last selection set to zero");
+//                    }
+//                }
+//                inputCategory.setSelection(lastSpinnerSelection);
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> arg0) {
+//            }
+//        });
+
+        return rootView;
     }
 
     @Override
@@ -120,7 +133,7 @@ public class FragmentOne extends Fragment {
         Bundle b = new Bundle();
         b.putString("msg", text);
         f.setArguments(b);
-        
+
         return f;
     }
 
@@ -157,7 +170,7 @@ public class FragmentOne extends Fragment {
             listNotes.saveNewNote(note);
             inputText.setText("");
             inputTitle.setText("");
-           // inputCategory.setText("");
+            // inputCategory.setText("");
             imageView.setImageBitmap(null);
             activity.makeToast("I exist to obey. Your note has been saved");
         } else if (str.length() == 0 && title.length() != 0) {
