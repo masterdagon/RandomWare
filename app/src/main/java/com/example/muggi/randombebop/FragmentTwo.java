@@ -106,26 +106,26 @@ public class FragmentTwo extends Fragment {
         note1.setName(note.getName());
         note1.setPicture(note.getPicture());
         listNotes.saveOldNote(note1, true);
-        String textPath = "#RandomBebop"+note1.getId()+".txt";
+        String textPath = "#RandomBebop" + note1.getId() + ".txt";
         String text = "text/plain";
-        if(note1.getPicture().equals("NOTSET")){
-            String[] paths = new String[]{text,textPath};
+        if (note1.getPicture().equals("NOTSET")) {
+            String[] paths = new String[]{text, textPath};
             return paths;
 
-        }else{
+        } else {
             String[] temp = note1.getPicture().split("/");
-            String imagePath = "NotePictures/"+temp[temp.length-1];
+            String imagePath = "NotePictures/" + temp[temp.length - 1];
             String img = "image/jpg";
-            String[] paths = new String[]{text,textPath,img,imagePath};
+            String[] paths = new String[]{text, textPath, img, imagePath};
             return paths;
         }
     }
 
-    public boolean deletebluetoothfile(){
-        return listNotes.deleteNote(listNotes.getSize()-1,true);
+    public boolean deletebluetoothfile() {
+        return listNotes.deleteNote(listNotes.getSize() - 1, true);
     }
 
-    public boolean somthingSelected(){
+    public boolean somthingSelected() {
         if (lastListItemSelected == -1) {
             return false;
         } else {
@@ -148,7 +148,6 @@ public class FragmentTwo extends Fragment {
                 String str = node.getMessage();
                 String path = node.getPicture();
                 showText.setText(str);
-                activity.makeToast("Position: " + position);
 
                 if (!path.equals("NOTSET")) {
                     File imgFile = new File(path);
@@ -169,7 +168,7 @@ public class FragmentTwo extends Fragment {
         });
         System.out.println("Size of array: " + listNotes.notes.size());
     }
-    
+
     public void runThisWhenReturningFromEditView() {
         Note node = listNotes.getNoteByListPlacement(lastListItemSelected);
         String str = node.getMessage();
@@ -178,14 +177,14 @@ public class FragmentTwo extends Fragment {
 
     public void deleteNote(View view) {
         if (lastListItemSelected != -1) {
-            boolean deleted = listNotes.deleteNote(lastListItemSelected,false);
+            boolean deleted = listNotes.deleteNote(lastListItemSelected, false);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
             notelist.setAdapter(adapter);
             lastListItemSelected = -1;
             showText.setText("");
             if (deleted) {
                 activity.makeToast("Madam/Sir, your note has been deleted!");
-            }else{
+            } else {
                 activity.makeToast("Madam/Sir, Somthing went wrong!");
             }
         } else {
