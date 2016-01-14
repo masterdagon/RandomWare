@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/activityDetailsTitle"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="This is the new activity"
         android:layout_centerHorizontal="true"
