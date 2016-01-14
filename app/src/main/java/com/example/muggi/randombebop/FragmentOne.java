@@ -55,7 +55,7 @@ public class FragmentOne extends Fragment {
 
         activity = ((MainActivity) getActivity());
         listNotes = activity.listNotes;
-        ((TextView) activity.findViewById(R.id.fragmentTitle)).setText("");
+//        ((TextView) activity.findViewById(R.id.fragmentTitle)).setText("");
         inputTitle = (EditText) activity.findViewById(R.id.noteTitle);
         imageView = (ImageView) activity.findViewById(R.id.imagef1);
         inputText = (EditText) activity.findViewById(R.id.noteMsg);
@@ -66,18 +66,6 @@ public class FragmentOne extends Fragment {
         LTRadapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         inputCategory.setAdapter(LTRadapter);
     }
-
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//
-//        super.onCreate(savedInstanceState);
-////        listNotes = ((MainActivity)getActivity()).listNotes;
-////
-////        inputText = (EditText) getView().findViewById(R.id.noteInput);
-////        inputTitle = (EditText) getView().findViewById(R.id.noteTitle);
-////        imageView = (ImageView) getView().findViewById(R.id.imagef1);
-//
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

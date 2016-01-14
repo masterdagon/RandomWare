@@ -57,8 +57,8 @@ public class FragmentTwo extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_two, container, false);
 
         Bundle args = getArguments();
-        TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
-        tw.setText(args.getString(""));
+//        TextView tw = (TextView) rootView.findViewById(R.id.fragmentTitle);
+//        tw.setText(args.getString(""));
         notelist = (ListView) rootView.findViewById(R.id.list);
         showText = (TextView) rootView.findViewById(R.id.responseText);
         imageView = (ImageView) rootView.findViewById(R.id.imagef2);
