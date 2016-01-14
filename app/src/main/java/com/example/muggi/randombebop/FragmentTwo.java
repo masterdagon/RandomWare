@@ -108,15 +108,15 @@ public class FragmentTwo extends Fragment {
         listNotes.saveOldNote(note1, true);
         String textPath = "#RandomBebop" + note1.getId() + ".txt";
         String text = "text/plain";
-        if(note1.getPicture().equals("NOTSET")){
-            String[] paths = new String[]{text,textPath};
+        if (note1.getPicture().equals("NOTSET")) {
+            String[] paths = new String[]{text, textPath};
             return text;
 
-        }else{
+        } else {
             String[] temp = note1.getPicture().split("/");
-            String imagePath = "NotePictures/"+temp[temp.length-1];
+            String imagePath = "NotePictures/" + temp[temp.length - 1];
             String img = "image/jpg";
-            String[] paths = new String[]{text,textPath,img,imagePath};
+            String[] paths = new String[]{text, textPath, img, imagePath};
             return text;
         }
     }
@@ -134,11 +134,11 @@ public class FragmentTwo extends Fragment {
     }
 
     public void initList() {
-        if (listNotes.getSize() > 0) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
-            notelist.setAdapter(adapter);
+        ArrayAdapter<String> adapter;
 
-        }
+        adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
+
+        notelist.setAdapter(adapter);
 
         notelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -178,8 +178,7 @@ public class FragmentTwo extends Fragment {
     public void deleteNote(View view) {
         if (lastListItemSelected != -1) {
             boolean deleted = listNotes.deleteNote(lastListItemSelected, false);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
-            notelist.setAdapter(adapter);
+            initList();
             lastListItemSelected = -1;
             showText.setText("");
             if (deleted) {
