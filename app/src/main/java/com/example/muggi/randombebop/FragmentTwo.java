@@ -144,7 +144,6 @@ public class FragmentTwo extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 lastListItemSelected = position;
-                System.out.println("this is Posistion " + position);
                 Note node = listNotes.getNotePosition(position);
                 String str = node.getMessage();
                 String path = node.getPicture();
