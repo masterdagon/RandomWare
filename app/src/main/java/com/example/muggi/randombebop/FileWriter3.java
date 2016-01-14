@@ -19,9 +19,19 @@ import java.util.List;
  */
 public class FileWriter3 {
 
-    File filedir;
-    File filedir2;
-    int newID = 0;
+    private File filedir;
+    private File filedir2;
+    private int newID = 0;
+    private int newPId=0;
+
+    public int getNewPId(){
+        return newPId;
+    }
+
+    public void setNewPId(int id){
+        newPId=id;
+        saveId(newPId,false);
+    }
 
     public FileWriter3() {
         try {
@@ -30,7 +40,6 @@ public class FileWriter3 {
                 filedir.mkdirs();
             }
         } catch (Exception e) {
-
         }
         try {
             filedir2 = new File(Environment.getExternalStorageDirectory(), "Notes/settings");
@@ -40,31 +49,38 @@ public class FileWriter3 {
         } catch (Exception e) {
 
         }
-        newID = loadId();
+        newID = loadId(true);
     }
 
     public ArrayList<Note> loadAllFiles() {
         ArrayList<Note> inFiles = new ArrayList<>();
         File[] files = filedir.listFiles();
-        for (File f : files) {
+        for (File f :files) {
+            if(f.getName().endsWith(".zip")){
+                // run unZip
+            }
+        }
+        for (File f :files) {
             if (f.isDirectory()) {
-                //inFiles.addAll(getAllFiles(file));
-            } else {
+
+            }else if (f.getName().length() > 13) {
+                if (f.getName().substring(0, 11).equals("#RandomBebop")) {
+                    Note note = loadNote(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
+                    if (deleteNote(note, false)) {
+                        saveNote(note, true,false);
+                        if(!note.getPicture().equals("NOTSET")){
+
+                        }
+                        inFiles.add(note);
+                    }
+                }
+            }else{
                 if (f.getName().endsWith(".txt")) {
-                        inFiles.add(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
+                    inFiles.add(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
                 }
             }
         }
-//        if (f.getName().substring(0, 11).equals("#RandomBebop")) {
-//            Note note = loadNote(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
-//            if (deleteNote(note,false)) {
-//                note.setId(newID);
-//                saveNote(note, true);
-//                newID++;
-//                saveId(newID);
-//            }
-//        } else {
-//        }
+
         return inFiles;
     }
 
@@ -116,7 +132,7 @@ public class FileWriter3 {
         if (newNote) {
             note.setId(newID);
             newID++;
-            saveId(newID);
+            saveId(newID,true);
         }
         int name = note.getId();
         try {
@@ -273,9 +289,14 @@ public class FileWriter3 {
         }
     }
 
-    public int loadId() {
+    public int loadId(boolean noteId) {
         int id = 0;
-        File file = new File(filedir2, "id.txt");
+        File file;
+        if(noteId){
+            file = new File(filedir2, "nId.txt");
+        }else{
+            file = new File(filedir2, "pId.txt");
+        }
         FileInputStream fis = null;
         if (!file.exists()) {
             return id;
@@ -305,13 +326,18 @@ public class FileWriter3 {
         }
     }
 
-    public boolean saveId(int id) {
+    public boolean saveId(int id,boolean noteId) {
         boolean succes = false;
         String content = "";
         FileOutputStream fop = null;
         File file;
         try {
-            file = new File(filedir2, "id.txt");
+            if(noteId){
+                file = new File(filedir2, "nId.txt");
+            }else{
+                file = new File(filedir2, "pId.txt");
+            }
+
             fop = new FileOutputStream(file);
             file.createNewFile();
             content = "" + id;
@@ -335,6 +361,4 @@ public class FileWriter3 {
             }
         }
     }
-
-    ;
 }
