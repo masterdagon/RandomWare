@@ -174,7 +174,7 @@ public class FragmentTwo extends Fragment {
             if(deleted){
                 activity.makeToast("Madam/Sir, your note has been deleted!");
             }else{
-                activity.makeToast("Madam/Sir, Somthing went wrong!");
+                activity.makeToast("Madam/Sir, something went wrong!");
             }
         } else {
             activity.makeToast("Hmm, nothing selected, cancelling delete to prevent anarchy and nihilistic tendencies");
