@@ -21,8 +21,9 @@
             android:id="@+id/list"
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:layout_below="@id/fragmentTitle" />
-
+            android:layout_below="@id/fragmentTitle"
+            android:choiceMode="singleChoice"
+            android:listSelector="@color/colorAccent"/>
     </RelativeLayout>
 
     <RelativeLayout
