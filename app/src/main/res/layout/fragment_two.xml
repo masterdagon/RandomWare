@@ -67,7 +67,7 @@
                 android:layout_margin="5dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/buttonDelete"
-                android:onClick="share"
+                android:onClick="sendViaBluetooth"
                 android:text="Share" />
 
             <!--<TextView-->
