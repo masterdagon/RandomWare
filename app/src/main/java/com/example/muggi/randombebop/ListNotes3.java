@@ -38,12 +38,12 @@ public class ListNotes3 {
 
 
     public void saveNewNote(Note note) {
-        Note note1 = fw.saveNote(note, true);
+        Note note1 = fw.saveNote(note, true,false);
         this.notes.add(note1);
     }
 
-    public void saveOldNote(Note note) {
-        fw.saveNote(note, false);
+    public void saveOldNote(Note note,boolean blue) {
+        fw.saveNote(note, false, blue);
 
     }
 
@@ -93,8 +93,8 @@ public class ListNotes3 {
         return astr;
     }
 
-    public boolean deleteNote(int position) {
-        boolean deleted = fw.deleteNote(notes.get(position));
+    public boolean deleteNote(int position,boolean blue) {
+        boolean deleted = fw.deleteNote(notes.get(position),blue);
         if (deleted) {
             notes.remove(position);
         }
@@ -116,7 +116,7 @@ public class ListNotes3 {
         if (found) {
             notes.remove(index);
             notes.add(index, note);
-            saveOldNote(note);
+            saveOldNote(note,false);
         }
         return found;
     }

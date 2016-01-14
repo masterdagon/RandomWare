@@ -3,11 +3,13 @@ package com.example.muggi.randombebop;
 
 import android.bluetooth.BluetoothAdapter;
 import android.app.FragmentTransaction;
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -31,6 +33,7 @@ import com.example.muggi.randombebop.R;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Michael on 07/12/15.
@@ -46,7 +49,7 @@ public class FragmentTwo extends Fragment {
     public static MainActivity activity;
     public ImageView imageView;
 
-    PackageManager pm = activity.getPackageManager();
+//    PackageManager pm = activity.getPackageManager();
 
     public View rootView;
 
@@ -67,7 +70,7 @@ public class FragmentTwo extends Fragment {
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         activity = ((MainActivity) getActivity());
         notelist = (ListView) rootView.findViewById(R.id.list);
@@ -95,32 +98,40 @@ public class FragmentTwo extends Fragment {
         return f;
     }
 
-    public void bluetoothsend(){
-        Note note;
-        if (lastListItemSelected != -1) {
+    public String[] bluetoothsend() {
+        Note note = listNotes.getNotePosition(lastListItemSelected);
+        lastListItemSelected = -1;
+        Note note1 = new Note(-1);
+        note1.setId(note.getId());
+        note1.setMessage(note.getMessage());
+        note1.setCategory(note.getCategory());
+        note1.setName(note.getName());
+        note1.setPicture(note.getPicture());
+        listNotes.saveOldNote(note1, true);
+        String textPath = "#RandomBebop"+note1.getId()+".txt";
+        String text = "text/plain";
+        if(note1.getPicture().equals("NOTSET")){
+            String[] paths = new String[]{text,textPath};
+            return paths;
 
-        }else {
-            note = listNotes.getNotePosition(lastListItemSelected);
-            lastListItemSelected = -1;
-            showText.setText("");
+        }else{
+            String[] temp = note1.getPicture().split("/");
+            String imagePath = "NotePictures/"+temp[temp.length-1];
+            String img = "image/jpg";
+            String[] paths = new String[]{text,textPath,img,imagePath};
+            return paths;
+        }
+    }
 
-            BluetoothAdapter btAdapter = BluetoothAdapter.getDefaultAdapter();
-            if (btAdapter == null) {
-                //this dosent work no bluetooth
-            } else {
-                Intent intent = new Intent();
-                intent.setAction(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_STREAM, note.getPicture());
-                //...
-                startActivity(intent);
+    public boolean deletebluetoothfile(){
+        return listNotes.deleteNote(listNotes.getSize()-1,true);
+    }
 
-
-//            List appsList = pm.queryIntentActivities( intent, 0);
-//            if(appsList.size() > 0) {
-//                // proceed
-//            }
-            }
+    public boolean somthingSelected(){
+        if (lastListItemSelected == -1) {
+            return false;
+        } else {
+            return true;
         }
     }
 
@@ -134,8 +145,8 @@ public class FragmentTwo extends Fragment {
         notelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                lastListItemSelected=position;
-                System.out.println("this is Posistion "+ position);
+                lastListItemSelected = position;
+                System.out.println("this is Posistion " + position);
                 Note node = listNotes.getNotePosition(position);
                 String str = node.getMessage();
                 String path = node.getPicture();
@@ -161,21 +172,23 @@ public class FragmentTwo extends Fragment {
         });
         System.out.println("Size of array: " + listNotes.notes.size());
     }
-    public void runThisWhenReturningFromEditView(){
-        Note node = listNotes.loadFromPosition(lastListItemSelected);
+
+    public void runThisWhenReturningFromEditView() {
+        Note node = listNotes.getNoteByListPlacement(lastListItemSelected);
         String str = node.getMessage();
         showText.setText(str);
     }
+
     public void deleteNote(View view) {
         if (lastListItemSelected != -1) {
-            boolean deleted = listNotes.deleteNote(lastListItemSelected);
+            boolean deleted = listNotes.deleteNote(lastListItemSelected,false);
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
             notelist.setAdapter(adapter);
             lastListItemSelected = -1;
             showText.setText("");
-            if(deleted){
+            if (deleted) {
                 activity.makeToast("Madam/Sir, your note has been deleted!");
-            }else{
+            } else {
                 activity.makeToast("Madam/Sir, Somthing went wrong!");
             }
         } else {

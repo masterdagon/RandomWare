@@ -34,19 +34,20 @@
         android:layout_below="@id/buttonEdit"
         android:text="Delete"
         android:onClick="deleteNote"/>
+
     <Button
-        android:id="@+id/buttonbluetooth"
+        android:id="@+id/buttonBluetooth"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/buttonDelete"
-        android:text="Share"
-        android:onClick="share"/>
+        android:text="Share with bluetooth"
+        android:onClick="sendViaBluetooth"/>
 
     <TextView
         android:id="@+id/responseText"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/buttonDelete"
+        android:layout_below="@id/buttonBluetooth"
         android:text="@string/response"/>
     <ImageView
         android:id="@+id/imagef2"

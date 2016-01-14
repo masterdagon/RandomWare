@@ -51,20 +51,20 @@ public class FileWriter3 {
                 //inFiles.addAll(getAllFiles(file));
             } else {
                 if (f.getName().endsWith(".txt")) {
-                    if (f.getName().substring(0, 1).equals("#")) {
-                        Note note = loadNote(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
-                        if (deleteNote(note)) {
-                            note.setId(newID);
-                            saveNote(note, true);
-                            newID++;
-                            saveId(newID);
-                        }
-                    } else {
                         inFiles.add(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
-                    }
                 }
             }
         }
+//        if (f.getName().substring(0, 11).equals("#RandomBebop")) {
+//            Note note = loadNote(new Note(Integer.parseInt(f.getName().substring(0, f.getName().length() - 4))));
+//            if (deleteNote(note,false)) {
+//                note.setId(newID);
+//                saveNote(note, true);
+//                newID++;
+//                saveId(newID);
+//            }
+//        } else {
+//        }
         return inFiles;
     }
 
@@ -108,7 +108,7 @@ public class FileWriter3 {
         return note;
     }
 
-    public Note saveNote(Note note, boolean newNote) {
+    public Note saveNote(Note note, boolean newNote,boolean blue) {
         String content = "";
         FileOutputStream fop = null;
         File file;
@@ -120,7 +120,11 @@ public class FileWriter3 {
         }
         int name = note.getId();
         try {
-            file = new File(filedir, name + ".txt");
+            if(blue){
+                file = new File(filedir, "#RandomBebop"+name + ".txt");
+            }else{
+                file = new File(filedir, name + ".txt");
+            }
             fop = new FileOutputStream(file);
             // if file doesnt exists, then create it
 
@@ -162,8 +166,13 @@ public class FileWriter3 {
         }
     }
 
-    public boolean deleteNote(Note note) {
-        File file = new File(filedir.getPath() + "/" + note.getId() + ".txt");
+    public boolean deleteNote(Note note,boolean blue) {
+        File file;
+        if(blue){
+            file = new File(filedir.getPath() + "/#RandomBebop" + note.getId() + ".txt");
+        }else{
+            file = new File(filedir.getPath() + "/" + note.getId() + ".txt");
+        }
         boolean deleted = file.delete();
         return deleted;
     }
