@@ -46,8 +46,6 @@ public class FragmentTwo extends Fragment {
     public static MainActivity activity;
     public ImageView imageView;
 
-    PackageManager pm = activity.getPackageManager();
-
     public View rootView;
 
     @Override
@@ -162,7 +160,7 @@ public class FragmentTwo extends Fragment {
         System.out.println("Size of array: " + listNotes.notes.size());
     }
     public void runThisWhenReturningFromEditView(){
-        Note node = listNotes.loadFromPosition(lastListItemSelected);
+        Note node = listNotes.getNoteByListPlacement(lastListItemSelected);
         String str = node.getMessage();
         showText.setText(str);
     }
