@@ -96,7 +96,7 @@ public class FragmentTwo extends Fragment {
         return f;
     }
 
-    public String[] bluetoothsend() {
+    public String bluetoothsend() {
         Note note = listNotes.getNotePosition(lastListItemSelected);
         lastListItemSelected = -1;
         Note note1 = new Note(-1);
@@ -110,14 +110,14 @@ public class FragmentTwo extends Fragment {
         String text = "text/plain";
         if(note1.getPicture().equals("NOTSET")){
             String[] paths = new String[]{text,textPath};
-            return paths;
+            return text;
 
         }else{
             String[] temp = note1.getPicture().split("/");
             String imagePath = "NotePictures/"+temp[temp.length-1];
             String img = "image/jpg";
             String[] paths = new String[]{text,textPath,img,imagePath};
-            return paths;
+            return text;
         }
     }
 
