@@ -106,7 +106,7 @@ public class FragmentTwo extends Fragment {
         note1.setName(note.getName());
         note1.setPicture(note.getPicture());
         listNotes.saveOldNote(note1, true);
-        String textPath = "#RandomBebop"+note1.getId()+".txt";
+        String textPath = "#RandomBebop" + note1.getId() + ".txt";
         String text = "text/plain";
         if(note1.getPicture().equals("NOTSET")){
             String[] paths = new String[]{text,textPath};
