@@ -100,7 +100,7 @@ public class FragmentTwo extends Fragment {
         Note note = listNotes.getNotePosition(lastListItemSelected);
         lastListItemSelected = -1;
         listNotes.fw.zipFiles(note);
-        return "#"+note.getId()+".zip";
+        return "#" + note.getId() + ".zip";
     }
 
     public boolean deletebluetoothfile() {
@@ -116,11 +116,11 @@ public class FragmentTwo extends Fragment {
     }
 
     public void initList() {
-        if (listNotes.getSize() > 0) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
-            notelist.setAdapter(adapter);
+        ArrayAdapter<String> adapter;
 
-        }
+        adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
+
+        notelist.setAdapter(adapter);
 
         notelist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -160,8 +160,7 @@ public class FragmentTwo extends Fragment {
     public void deleteNote(View view) {
         if (lastListItemSelected != -1) {
             boolean deleted = listNotes.deleteNote(lastListItemSelected, false);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(activity, android.R.layout.simple_list_item_1, listNotes.getTitles());
-            notelist.setAdapter(adapter);
+            initList();
             lastListItemSelected = -1;
             showText.setText("");
             if (deleted) {
