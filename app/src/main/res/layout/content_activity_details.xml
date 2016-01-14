@@ -13,10 +13,18 @@
     tools:showIn="@layout/activity_activity_details">
 
     <TextView
+        android:id="@+id/activityDetailsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is the new activity"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/detailsTWTitle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/activityDetailsTitle"
         android:text="Title" />
 
     <EditText
@@ -45,42 +53,43 @@
 
     <TextView
         android:id="@+id/detailsTWCategory"
-        android:layout_width="fill_parent"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/detailsMessage"
         android:text="Category" />
 
-    <EditText
-        android:id="@+id/detailsCategory"
-        android:layout_width="fill_parent"
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/detailsTWCategory"
-        android:hint="Category" />
+        android:layout_below="@+id/detailsMessage"
+        android:layout_centerHorizontal="true" />
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/detailsCategory"
-    android:id="@+id/linlay">
-    <Button
-        android:id="@+id/detailsButtonSave"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linlay"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="save"
-        android:layout_weight="1"
-        android:layout_margin="5dp"
-        android:text="Save" />
+        android:layout_below="@+id/spinner1">
 
-    <Button
-        android:id="@+id/detailsButtonCancel"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_margin="5dp"
-        android:layout_height="wrap_content"
-        android:onClick="cancel"
-        android:text="Cancel" />
+        <Button
+            android:id="@+id/detailsButtonSave"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:onClick="save"
+            android:text="Save" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/detailsButtonCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:onClick="cancel"
+            android:text="Cancel" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/detailsImageView"
@@ -88,8 +97,6 @@
         android:layout_height="200dp"
         android:layout_below="@+id/linlay"
         android:layout_centerHorizontal="true" />
-
-
 
 
 </RelativeLayout>

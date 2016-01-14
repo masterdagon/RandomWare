@@ -82,8 +82,10 @@ public class MainActivity extends AppCompatActivity {
             makeToast("No note selected");
         } else {
             Note note = listNotes.getNoteByListPlacement(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+            String [] values = listNotes.getCategories();
             Intent intentEdit = new Intent(this, ActivityDetails.class);
             intentEdit.putExtra("selectedNote", note);
+            intentEdit.putExtra("categories",values);
             startActivityForResult(intentEdit, 13372);
         }
     }
