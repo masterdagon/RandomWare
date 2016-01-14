@@ -49,8 +49,6 @@ public class FragmentTwo extends Fragment {
     public static MainActivity activity;
     public ImageView imageView;
 
-//    PackageManager pm = activity.getPackageManager();
-
     public View rootView;
 
     @Override
@@ -172,7 +170,7 @@ public class FragmentTwo extends Fragment {
         });
         System.out.println("Size of array: " + listNotes.notes.size());
     }
-
+    
     public void runThisWhenReturningFromEditView() {
         Note node = listNotes.getNoteByListPlacement(lastListItemSelected);
         String str = node.getMessage();
@@ -188,7 +186,7 @@ public class FragmentTwo extends Fragment {
             showText.setText("");
             if (deleted) {
                 activity.makeToast("Madam/Sir, your note has been deleted!");
-            } else {
+            }else{
                 activity.makeToast("Madam/Sir, Somthing went wrong!");
             }
         } else {
