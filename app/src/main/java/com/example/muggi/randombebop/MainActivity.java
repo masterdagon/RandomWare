@@ -2,7 +2,6 @@ package com.example.muggi.randombebop;
 
 
 import android.bluetooth.BluetoothAdapter;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -216,11 +215,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (resultCode == DISCOVER_DURATION && reqCode == REQUEST_BLU) {
-            String path = ((FragmentTwo) viewAdapter.f2).bluetoothsend();
+            String fileName = ((FragmentTwo) viewAdapter.f2).bluetoothsend();
             Intent intent = new Intent();
             intent.setAction(Intent.ACTION_SEND);
             intent.setType("application/zip");
-            File f = new File(Environment.getExternalStorageDirectory(), "notes/" + path);
+            File f = new File(Environment.getExternalStorageDirectory(), "notes/" + fileName);
             intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(f));
 
             PackageManager pm = getPackageManager();
@@ -246,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
                     intent.setClassName(packageName, className);
                     startActivity(intent);
                 }
-                ((FragmentTwo) viewAdapter.f2).deletebluetoothfile();
+                ((FragmentTwo) viewAdapter.f2).deletebluetoothfile(fileName);
             }
         }
     }

@@ -68,6 +68,7 @@ public class FileWriter3 {
 
         }
         newID = loadId(true);
+        newPId = loadId(false);
     }
 
     public ArrayList<Note> loadAllFiles() {
@@ -214,13 +215,15 @@ public class FileWriter3 {
         }
     }
 
+    public boolean deleteZip(String name){
+        File file = new File(filedir,"Notes/"+name);
+        return file.delete();
+    }
+
     public boolean deleteNote(Note note,boolean blue) {
         File file;
-        if(blue){
-            file = new File(filedir.getPath() + "/#note" + note.getId() + ".txt");
-        }else{
+
             file = new File(filedir.getPath() + "/" + note.getId() + ".txt");
-        }
         boolean deleted = file.delete();
         return deleted;
     }

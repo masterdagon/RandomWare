@@ -103,8 +103,8 @@ public class FragmentTwo extends Fragment {
         return "#" + note.getId() + ".zip";
     }
 
-    public boolean deletebluetoothfile() {
-        return listNotes.deleteNote(listNotes.getSize() - 1, true);
+    public boolean deletebluetoothfile(String name) {
+        return listNotes.fw.deleteZip(name);
     }
 
     public boolean somthingSelected() {
