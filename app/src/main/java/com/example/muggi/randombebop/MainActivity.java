@@ -137,15 +137,18 @@ public class MainActivity extends AppCompatActivity {
         // get picture URI
 
         String pictureURI;
-        Note note = listNotes.getNoteByListPlacement(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
-        pictureURI = note.getPicture();
+        boolean selected = ((FragmentTwo) viewAdapter.f2).somthingSelected();
+        if(selected){
+            Note note = listNotes.getNoteByListPlacement(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
+            pictureURI = note.getPicture();
 
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_VIEW);
-        File image = new File(pictureURI);
-        intent.setDataAndType(Uri.fromFile(image),"image/*");
+            Intent intent = new Intent();
+            intent.setAction(Intent.ACTION_VIEW);
+            File image = new File(pictureURI);
+            intent.setDataAndType(Uri.fromFile(image),"image/*");
 
-        startActivity(intent);
+            startActivity(intent);
+        }
         /*
         String pictureURI;
         Note note = listNotes.getNoteByListPlacement(((FragmentTwo) viewAdapter.f2).lastListItemSelected);
